@@ -1,0 +1,25 @@
+<h2>Resend unlock instructions</h2>
+<form action="/unlock" method="post">
+  <div class="simple_form form_class" id="new_resource">
+    <input type="hidden" name="_method" value="post">
+    <div class="error_notification">
+      <!-- Error notification content will be inserted here by the form library -->
+    </div>
+    <div class="full_error">
+      <!-- Full error for :unlock_token will be inserted here by the form library -->
+    </div>
+    <div class="form-inputs">
+      <div class="input email required">
+        <label for="resource_email">Email</label>
+        <input autofocus="autofocus" required="required" type="email" name="resource[email]" id="resource_email">
+      </div>
+    </div>
+    <div class="form-actions">
+      <input type="submit" name="commit" value="Resend unlock instructions" class="button">
+    </div>
+  </div>
+</form>
+<div>
+  <!-- Devise shared links will be rendered here -->
+  <%= render "devise/shared/links" %>
+</div>

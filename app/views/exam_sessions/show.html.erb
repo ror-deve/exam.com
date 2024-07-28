@@ -1,0 +1,27 @@
+<% i = 0 %>
+<div>
+  <h1 class="text-uppercases">Rankings</h1>
+</div>
+<table class="table">
+  <thead>
+    <tr>
+      <th>Sr. No.</th>
+      <th>Name</th>
+      <th>Maximum Marks</th>
+      <th>Score</th>
+      <th>Percentage</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @exam_sessions.each do |exam| %>
+      <% i += 1 %>
+      <tr>
+        <td><%= i %></td>
+        <td><%= exam.student.name %></td>
+        <td><%= exam.max_marks %></td>
+        <td><%= exam.score %></td>
+        <td><%= exam.percentage.to_s + ' %' %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

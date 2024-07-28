@@ -1,0 +1,106 @@
+<div class="pagetitle">
+  <h1>Dashboard</h1>
+  <nav>
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item"><a href="/">Home</a></li>
+      <li class="breadcrumb-item active">Dashboard</li>
+    </ol>
+  </nav>
+</div>
+<section class="section dashboard">
+  <div class="row">
+    <div class="col-lg-8">
+      <div class="row">
+        <div class="col-xxl-4 col-md-6">
+          <div class="card info-card sales-card">
+            <div class="card-body">
+              <h5 class="card-title">Exams <span>| Total Exams</span></h5>
+              <div class="d-flex align-items-center">
+                <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
+                  <i class="bi bi-card-checklist"></i>
+                </div>
+                <div class="ps-3">
+                  <h6><%= current_teacher.accounts.includes(:exams).flat_map(&:exams)&.count %></h6>
+                  <span class="text-muted small pt-2 ps-1">You have total <span class="text-success small pt-1 fw-bold"><%= current_teacher.accounts&.count %></span> accounts</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-xxl-4 col-md-6">
+          <div class="card info-card revenue-card">
+            <div class="card-body">
+              <h5 class="card-title">Subjects <span>| Total Subjects</span></h5>
+              <div class="d-flex align-items-center">
+                <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
+                  <i class="bi bi-newspaper"></i>
+                </div>
+                <div class="ps-3">
+                  <h6><%= current_teacher.subjects&.count %></h6>
+                  <span class="text-muted small pt-2 ps-1">You have total <span class="text-success small pt-1 fw-bold"><%= current_teacher.subjects.includes(:topics).flat_map(&:topics)&.count %></span> topics</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-xxl-4 col-xl-12">
+          <div class="card info-card customers-card">
+            <div class="card-body">
+              <h5 class="card-title">Batches <span>| Total Batches</span></h5>
+              <div class="d-flex align-items-center">
+                <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
+                  <i class="bi bi-people"></i>
+                </div>
+                <div class="ps-3">
+                  <h6><%= current_teacher.batches&.count %></h6>
+                  <span class="text-muted small pt-2 ps-1">You have total <span class="text-success small pt-1 fw-bold"><%= current_teacher.batches&.count %></span> batches</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-12">
+          <div class="card">
+            <div class="card-body pb-0">
+              <h5 class="card-title">Subjects <span>| Topics</span></h5>
+              <div id="subjectChart" style="min-height: 400px;" class="echart" data-subjects='<%= raw current_teacher.subjects.joins(:topics).map{|e| {value: e.topics.count, name: e.name}}.to_json %>'></div>
+            </div>
+          </div>
+          <div class="card recent-sales overflow-auto">
+            <div class="card-body">
+              <h5 class="card-title">Institutes <span>| Account</span></h5>
+              <table class="table table-borderless datatable">
+                <thead>
+                  <tr>
+                    <th scope="col">Account Name</th>
+                    <th scope="col">Address</th>
+                    <th scope="col">Phone</th>
+                    <th scope="col">Started from</th>
+                    <th scope="col">Status</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <% current_teacher.accounts.each do |account| %>
+                    <tr>
+                      <td><%= account.name %></td>
+                      <td><%= account.address %></td>
+                      <td><%= account.phone %></td>
+                      <td><%= time_ago_in_words(account.created_at) %> ago </td>
+                      <td><span class="<%= current_account == account ? 'badge bg-success': 'badge bg-warning'%>"><%= current_account == account ? 'Current Account' : 'Not Selected'%></span></td>
+                    </tr>
+                  <% end %>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-lg-4">
+      <%= render 'activity_feed' %>
+    </div>
+  </div>
+</section>
+<script>
+  ChartController();
+</script>

@@ -1,0 +1,40 @@
+<div class="modal fade" id="studentModal" tabindex="-1" aria-labelledby="studentModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="studentModalLabel">New Student</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <%= form_for @student, url: manage_account_batch_students_path(@current_account, @batch ),remote: true, html: { novalidate: true, class: "g-3 needs-validation" } do |form| %>
+        <div class="modal-body">
+        <div id="StudentErrors"></div>
+          <div class="mb-3">
+            <%= form.label :name, class: "form-label" %>
+            <%= form.text_field :name, class: 'form-control' , required: true %>
+            <div class="invalid-feedback">
+              Please enter the Name.
+            </div>
+          </div>
+          <div class="mb-3">
+            <%= form.label :email, class: "form-label" %>
+            <%= form.email_field :email, class: 'form-control' , required: true %>
+            <div class="invalid-feedback">
+              Please enter the email with @
+            </div>
+          </div>
+          <div class="mb-3">
+            <%= form.label :phone, class: "form-label" %>
+            <%= form.text_field :phone, class: 'form-control', required: true, pattern: '\d*' %>
+            <div class="invalid-feedback">
+            Please enter a valid phone number (numbers only).
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+          <%= form.submit "Submit", class: "btn btn-primary" %>
+        </div>
+      <% end %>
+    </div>
+  </div>
+</div>

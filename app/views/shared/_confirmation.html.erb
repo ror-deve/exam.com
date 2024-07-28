@@ -1,0 +1,25 @@
+<div class="modal fade" id="ExitConfirmation" tabindex="-1" aria-labelledby="ExitConfirmationLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h6 class="modal-title" id="ExitConfirmationLabel">Exit Confirmation</h6>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <div class="row">
+          <div class="col-sm-6">
+            <%= image_tag 'remove-confirmation.png', class: "removeConfirmation" %>
+          </div>
+          <div class="col-sm-6 deleteConfirmationText">
+            <h5>Are you sure you want to exit the exam?</h5>
+            <p>Your progress will be saved.</p>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        <%= button_to 'Confirm', exit_exam_student_exam_paper_path(@student, @exam, @paper), method: :post, class: 'btn btn-theme', form: { data: { turbo: false } } %>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,136 @@
+<div class="pagetitle">
+  <h1>Profile</h1>
+  <nav>
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item"><a href="<%= root_path %>">Home</a></li>
+      <li class="breadcrumb-item active">Profile</li>
+    </ol>
+  </nav>
+</div>
+<!-- End Page Title -->
+<section class="section profile">
+  <div class="row">
+    <div class="col-xl-4">
+      <div class="card">
+        <div class="card-body profile-card pt-4 d-flex flex-column align-items-center">                  
+          <div id="userAvatarMain">
+            <%= render 'users/user_avatar', circle: false  %>
+          </div>
+          <div class="updateUserName user_name">
+            <%= current_student ? @student.name.capitalize : @teacher.name.capitalize %>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-xl-8">
+      <div class="card w-100 p-3">
+        <div class="card-body pt-3">
+          <!-- Bordered Tabs -->
+          <ul class="nav nav-tabs nav-tabs-bordered">
+            <li class="nav-item">
+              <button class="nav-link active" data-bs-toggle="tab" data-bs-target="#profile-overview">Overview</button>
+            </li>
+            <li class="nav-item">
+              <button class="nav-link" data-bs-toggle="tab" data-bs-target="#profile-edit">Edit Profile</button>
+            </li>
+            <li class="nav-item">
+              <button class="nav-link" data-bs-toggle="tab" data-bs-target="#profile-settings">Settings</button>
+            </li>
+            <li class="nav-item">
+              <button class="nav-link" data-bs-toggle="tab" data-bs-target="#profile-change-password">Change Password</button>
+            </li>
+          </ul>
+          <div class="tab-content pt-4">
+            <div class="spinner-overlay" id="loadingState">
+              <div class="spinner-border" role="status">
+                <span class="visually-hidden">Loading...</span>
+              </div>
+            </div>
+            <div class="tab-pane fade show active" id="profile-overview">
+              <!-- Profile Overview Content -->
+              <%= render 'users/profile_overview', circle: true  %>
+            </div>
+            <div class="tab-pane fade profile-edit" id="profile-edit">
+              <!-- Profile Avatar Form -->
+              <%= render "users/upload_avatar" %>
+              <!-- End Profile Avatar Form -->
+              <!-- Profile Edit Form -->
+              <%= render "users/update_form" %>
+              <!-- End Profile Edit Form -->
+            </div>
+            <div class="tab-pane fade" id="profile-settings">
+              <!-- Profile Settings Content -->
+              <form>
+                <div class="row mb-3">
+                  <label for="fullName" class="col-md-4 col-lg-3 col-form-label">Email Notifications</label>
+                  <div class="col-md-8 col-lg-9">
+                    <div class="form-check">
+                      <input class="form-check-input" type="checkbox" id="changesMade" checked>
+                      <label class="form-check-label" for="changesMade">
+                        Changes made to your account
+                      </label>
+                    </div>
+                    <div class="form-check">
+                      <input class="form-check-input" type="checkbox" id="newProducts" checked>
+                      <label class="form-check-label" for="newProducts">
+                        Information on new products and services
+                      </label>
+                    </div>
+                    <div class="form-check">
+                      <input class="form-check-input" type="checkbox" id="proOffers">
+                      <label class="form-check-label" for="proOffers">
+                        Marketing and promo offers
+                      </label>
+                    </div>
+                    <div class="form-check">
+                      <input class="form-check-input" type="checkbox" id="securityNotify" checked disabled>
+                      <label class="form-check-label" for="securityNotify">
+                        Security alerts
+                      </label>
+                    </div>
+                  </div>
+                </div>
+                <div class="text-center">
+                  <button type="submit" class="btn btn-theme">Save Changes</button>
+                </div>
+              </form>
+            </div>
+            <div class="tab-pane fade" id="profile-change-password">
+              <!-- Change Password Form -->
+              <%= render 'users/change_password', circle: true  %>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<div class="modal fade" id="cropImagePop" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="myModalLabel">
+          <?=multiLanguage( "Edit Foto" , "Edit Photo" )?>
+        </h4>
+      </div>
+      <div class="modal-body">
+        <div id="upload-demo" class="center-block"></div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-bs-dismiss="modal">Close</button>
+        <button type="button" id="cropImageBtn" class="btn btn-theme">Crop</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  var current_student = "<%= current_student %>";
+  if (current_student) {
+    StudentsController();
+  } 
+  else {
+    TeacherController();
+  } 
+</script>

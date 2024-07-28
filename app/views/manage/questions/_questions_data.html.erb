@@ -1,0 +1,45 @@
+<div class="row">
+  <% questions.each do |question| %>
+    <div id="question_<%= question.id %>" class="col-md-3 mb-3">
+      <div class="card custom-exam-card">
+        <div class="card-header d-flex justify-content-between align-items-center">
+          <h6><%= question.title %></h6>
+        </div>
+        <div class="card-body">
+          <ul class="list-group">
+            <li class="list-group-item">
+              <div class="d-flex justify-content-between">
+                <span class="small-font">Question</span>
+                <span class="small-font"><%= question.title %></span>
+              </div>
+            </li>
+            <li class="list-group-item">
+              <div class="d-flex justify-content-between">
+                <span class="small-font">Topic</span>
+                <span class="small-font"><%= question.topic %></span>
+              </div>
+            </li>
+          </ul>
+        </div>
+        <div class="card-footer">
+          <div class="d-flex justify-content-end">
+            <div class="btn-group" role="group" aria-label="Basic example">
+               
+              <%= link_to edit_manage_account_exam_paper_question_path(@current_account, @exam, @paper, question), method: :GET, remote: true, class: "btn btn-theme btn-sm" do %>
+                <i class="bi bi-pencil" title="Edit"></i>
+              <% end %>&nbsp;
+              <%= link_to "javascript:void(0);", class:"btn btn-sm btn-danger delete questionDelete", data: { bs_toggle: "modal", bs_target: "#DeleteConfirmation", account_id: current_account.id, exam_id: @exam.id, paper_id: @paper.id, question_id: question.id } do %>
+                <i class="bi bi-trash" title="Delete"></i>
+              <% end %>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  <% end %>
+  
+  <!-- Question Pagination-->
+  <% if @questions&.any? %>
+    <%= render partial: 'shared/pagination', locals: { data: @questions, controller_name: 'manage/questions' } %>
+  <% end %> 
+</div>

@@ -1,0 +1,53 @@
+<div class="pagetitle">
+  <nav>
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item"><a href="/">Home</a></li>
+      <li class="breadcrumb-item "><%= link_to 'Exams', exams_path %></li>
+      <li class="breadcrumb-item active"><%= link_to 'Papers', exam_papers_path %></li>
+    </ol>
+  </nav>
+</div>
+<hr>
+<div class="row">
+  <div class="col-lg-12">
+    <span class="entity-title"><%= @exam.name %> - Papers</span>
+  </div>
+</div>
+<br>
+<div class="row">
+  <div class="col-lg-12">
+    <div class="row">
+      <%= render partial: "papers", locals: { papers: @papers } %>
+    </div>
+  </div>
+</div>
+
+<% paper_names = [] %>
+<% paper_names << @papers.name %>
+<% if @finished_paper_ids.count > 0 %>
+  <% coun = PaperSession.where(exam_id: @exam.id, student_id: current_student.id).count %>
+  <% if coun == (@papers.count) || (@exam.expired?) %>
+    <tr>
+      <div class="col-xs-3">
+        <canvas id="mypolar<%= @exam.id %>"></canvas>
+        <% scores = [] %>
+        <% PaperSession.where(exam_id: @exam.id, student_id: current_student.id).order(:paper_id).pluck(:score).each { |score| scores << score } %>
+        <script>
+          $(function(){
+            polarChart("mypolar<%= @exam.id %>", <%= scores.to_json %>, <%= paper_names.to_json %>);
+          });
+        </script>
+      </div>
+      <div class="col-xs-7">
+        <canvas id="bar<%= @exam.id %>"></canvas>
+        <% res = [] %>
+        <% PaperSession.where(exam_id: @exam.id).group(:paper_id).average(:score).each { |i| res << i[1] } %>
+        <script>
+          $(function(){
+            barChartPaper("bar<%= @exam.id %>", <%= paper_names.to_json %>, <%= scores.to_json %>, <%= res.to_json %>, 'My Score', 'Average Score');
+          });
+        </script>
+      </div>
+    </tr>
+  <% end %>
+<% end %>

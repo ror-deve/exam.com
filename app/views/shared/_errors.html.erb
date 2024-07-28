@@ -1,0 +1,9 @@
+<%# locals: (resource: []) -%>
+<% if resource.errors.any? %>
+  <div class="alert alert-danger">
+    <a class="close" data-bs-dismiss="alert">×</a>
+    <% resource.errors.full_messages.each do |message| %>
+      <li><%= message %></li>
+    <% end %>
+  </div>
+<% end %>

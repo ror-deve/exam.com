@@ -1,0 +1,40 @@
+<!-- Spinner Overlay -->
+<div class="loading-overlay" id="loadingOverlay">
+  <div class="spinner-border spinner-border" role="status">
+    <span class="sr-only" id="Spinner"></span>
+  </div>
+</div>
+
+<aside id="sidebar" class="sidebar">
+  <ul class="sidebar-nav" id="sidebar-nav">
+    <% if current_student %>
+      <li class="nav-item">
+        <a class="nav-link" href="/">
+          <i class="bi bi-grid"></i>
+          <span>Dashboard</span>
+        </a>
+      </li>
+      <li class="nav-item">
+        <%= link_to exams_path(@current_account), class: "nav-link #{'active' if current_page?(exams_path(@current_account))}" do %>
+          <i class="bi bi-book"></i>
+          <span>Exams</span>
+        <% end %>
+      </li>
+      <!-- End Components Nav -->
+      <li class="nav-item">
+        <%= link_to batches_path(@current_account), class: "nav-link #{'active' if current_page?(batches_path(@current_account))}" do %>
+          <i class="bi bi-people"></i>
+          <span>Batches</span>
+        <% end %>
+      </li>
+      <% if student_signed_in? %>
+        <li class="nav-item">
+          <%= link_to accounts_path(@current_account), class: "nav-link #{'active' if current_page?(accounts_path(@current_account))}" do %>
+            <i class="bi bi-collection"></i>
+            <span>Accounts</span>
+          <% end %>
+        </li>
+      <% end %>
+    <% end %>
+  </ul>
+</aside>

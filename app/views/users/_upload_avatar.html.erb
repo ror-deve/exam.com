@@ -1,0 +1,23 @@
+<%= form_with model: (current_student ? @student : @teacher), url: (current_student ? student_upload_avatar_path : teacher_upload_avatar_path), method: :post, local: false, id: "uploadImageForm" do |form| %>
+  <div class="row mb-3">
+    <div class="col-md-3 col-lg-3">
+      <label for="profileImage" class=" col-form-label">Profile Image</label>
+    </div>
+    <div class="col-md-2 col-lg-2">
+      <label class="cabinet center-block">
+        <figure class="navy">
+          <div id="userAvatar", class="image-container">
+            <%= render 'users/user_avatar', circle: false %>
+          </div>
+          <i class="bi bi-camera"></i>
+        </figure>
+        <%= form.file_field "avatar", type: "file", id: "profileImage", class: "item-img file center-block" %>
+      </label>
+      <div class="pt-2">
+        <%= form.submit "", id: "uploadImageButton", class: "btn btn-theme"%>
+      </div>
+    </div>
+    <div class="col-md-7 col-lg-7">
+    </div>
+  </div>
+<% end %>

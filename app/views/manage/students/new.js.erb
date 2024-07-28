@@ -1,0 +1,6 @@
+
+<% if @student %>
+  $("#student-form").html("<%= j render 'new_import_student' %>");
+  $('#studentModal').modal('show');
+  ApplicationController();
+<% end %>

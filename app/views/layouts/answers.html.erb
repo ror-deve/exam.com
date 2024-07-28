@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title><%= content_for?(:title) ? yield(:title) : "Pariksha24" %></title>
+  <script async src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS_CHTML" type="text/javascript"></script>
+  <%= csrf_meta_tags %>
+  <!--[if lt IE 9]>
+    <%= javascript_include_tag "//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.6.1/html5shiv.js" %>
+  <![endif]-->
+  <%= stylesheet_link_tag "application", "answer", media: "all" %>
+  <%= favicon_link_tag 'apple-touch-icon-144x144-precomposed.png', rel: 'apple-touch-icon-precomposed', type: 'image/png', sizes: '144x144' %>
+  <%= favicon_link_tag 'apple-touch-icon-114x114-precomposed.png', rel: 'apple-touch-icon-precomposed', type: 'image/png', sizes: '114x114' %>
+  <%= favicon_link_tag 'apple-touch-icon-72x72-precomposed.png', rel: 'apple-touch-icon-precomposed', type: 'image/png', sizes: '72x72' %>
+  <%= favicon_link_tag 'apple-touch-icon-precomposed.png', rel: 'apple-touch-icon-precomposed', type: 'image/png' %>
+  <%= favicon_link_tag 'favicon.ico', rel: 'shortcut icon' %>
+  <%= javascript_include_tag "application" %>
+</head>
+<body>
+  <div class="container">
+    <div id="exam_header" class="align_center">
+      <%= @paper.to_s %>
+      <div>
+        <div class="float_left">
+          <h1>Questions Left: <%= session[:questions_left] %></h1>
+        </div>
+        <div class="float_right">
+          <h1 class="exam_countdown large"><%= seconds_to_time(@time_left) %></h1>
+          <script>
+            var seconds_left = <%= @time_left %>;
+            function exam_timer(){
+              seconds_left = seconds_left - 1;
+              $('.exam_countdown').html(secondsToTime(seconds_left));
+              window.setTimeout(exam_timer, 1000);
+            }
+            window.setTimeout(exam_timer, 1000);
+          </script>
+        </div>
+      </div>
+      <br class="clearfloat">
+    </div>
+  </div>
+  <div class="container">
+    <br>
+    <br>
+    <div class="row">
+      <%= bootstrap_flash %>
+      <%= yield %>
+    </div>
+    <br>
+    <br>
+  </div>
+</body>
+</html>

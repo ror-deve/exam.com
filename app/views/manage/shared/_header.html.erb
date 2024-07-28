@@ -1,0 +1,80 @@
+<nav class="navbar navbar-default navbar-static-top">
+  <div class="container">
+    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-responsive-collapse">
+      <span class="icon-bar"></span>
+      <span class="icon-bar"></span>
+      <span class="icon-bar"></span>
+    </button>
+    <a href="/" class="navbar-brand">
+      <i class="bi bi-graduation-cap"></i>
+      Pariksha24
+      <% if @current_account %>
+        <small style="font-size:11px"><%= @current_account.name %></small>
+      <% end %>
+    </a>
+    <div class="navbar-collapse collapse navbar-responsive-collapse">
+      <ul class="nav navbar-nav pull-right">
+        <li class="<%= 'active' if controller_name == 'accounts' && action_name == 'dashboard' %>">
+          <%= link_to dashboard_manage_accounts_path do %>
+            <i class="bi bi-home"></i>
+            Dashboard
+          <% end %>
+        </li>
+        <% if @current_account %>
+          <li class="<%= 'active' if controller_name == 'exams' || controller_name == 'papers' %>">
+            <%= link_to manage_account_exams_path(@current_account) do %>
+              <i class="bi bi-check-square"></i>
+              Exams
+            <% end %>
+          </li>
+          <li class="<%= 'active' if controller_name == 'batches' || controller_name == 'students' %>">
+            <%= link_to manage_account_batches_path(@current_account) do %>
+              <i class="bi bi-users"></i>
+              Batches
+            <% end %>
+          </li>
+          <li class="<%= 'active' if controller_name == 'subjects' || controller_name == 'topics' %>">
+            <%= link_to manage_account_subjects_path(@current_account) do %>
+              <i class="bi bi-book"></i>
+              Subjects
+            <% end %>
+          </li>
+        <% end %>
+        <% if teacher_signed_in? %>
+          <li class="<%= 'active' if controller_name == 'accounts' && action_name != 'dashboard' %>">
+            <%= link_to manage_accounts_path do %>
+              <i class="bi bi-bars"></i>
+              Institutes
+            <% end %>
+          </li>
+          <li class="dropdown">
+            <%= link_to "", class: "dropdown-toggle", role: "button", "aria-expanded": false, data: { toggle: "dropdown" } do %>
+              <%= current_teacher.name %>
+              <span class="caret"></span>
+            <% end %>
+            <ul class="dropdown-menu" role="menu">
+              <% current_teacher.accounts.each do |account| %>
+                <li class="<%= 'active' if is_current?(account.id) %>">
+                  <%= link_to account.name, set_current_manage_account_path(account.id), method: :put %>
+                </li>
+              <% end %>
+              <li class="divider"></li>
+              <li>
+                <%= link_to edit_teacher_registration_path do %>
+                  <i class="bi bi-user"></i>
+                  Edit Profile
+                <% end %>
+              </li>
+              <li>
+                <%= link_to destroy_teacher_session_path, method: :delete do %>
+                  <i class="bi bi-power-off"></i>
+                  Logout
+                <% end %>
+              </li>
+            </ul>
+          </li>
+        <% end %>
+      </ul>
+    </div>
+  </div>
+</nav>

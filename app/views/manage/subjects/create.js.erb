@@ -1,0 +1,9 @@
+setTimeout(function() {  
+  $("#subjects-list").html("<%= j(render partial: 'subjects', locals: { subjects: @subjects }) %>");
+  $('#subject-model').modal('hide');
+  $('.modal-backdrop').hide();
+}, 1000);
+
+<% if @notification %>
+  pushNotify('<%= @notification[:status] %>', '<%= @notification[:title] %>', '<%= @notification[:message] %>');
+<% end %>

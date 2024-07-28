@@ -1,0 +1,8 @@
+
+$("#question-list").html("<%= j(render partial: 'questions_data', locals: { questions: @current_account.questions }) %>");
+$('#question-model').modal('hide');
+$('.modal-backdrop').hide();
+
+<% if @notification %>
+  pushNotify('<%= @notification[:status] %>', '<%= @notification[:title] %>', '<%= @notification[:message] %>');
+<% end %>

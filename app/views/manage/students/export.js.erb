@@ -1,0 +1,5 @@
+window.location.href = '<%= url_for(download_csv_manage_account_batch_students_path(@current_account, @batch, file_path: @file_path)) %>';
+
+<% if @notification %>
+  pushNotify('<%= @notification[:status] %>', '<%= @notification[:title] %>', '<%= @notification[:message] %>');
+<% end %>

@@ -1,0 +1,6 @@
+<% if @notification %>
+  $("#paper-list").html("<%= j(render partial: 'papers_data', locals: { papers: @papers }) %>");
+  $('#paper-model').modal('hide');
+  $('.modal-backdrop').hide();
+  pushNotify('<%= @notification[:status] %>', '<%= @notification[:title] %>', '<%= @notification[:message] %>');
+<% end %>

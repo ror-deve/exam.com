@@ -1,0 +1,53 @@
+<div class="modal fade" id="exammodel" tabindex="-1">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h6 class="modal-title">New Exam</h6>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <%= form_for @exam, url: manage_account_exams_path(current_account), html: { novalidate: true, class: "g-3 needs-validation" } do |form| %>
+        <div class="modal-body">
+          <div class="mb-3">
+            <%= form.label :name, class: "form-label" %>
+            <%= form.text_field :name, class: "form-control", required: true %>
+            <div class="invalid-feedback">
+              Please select a name.
+            </div>
+          </div>
+          <div class="mb-3">
+            <%= form.label :duration, class: "form-label" %>
+            <%= form.number_field :duration, class: "form-control", required: true %>
+            <div class="invalid-feedback">
+              Please select a duration.
+            </div>
+          </div>
+          <div class="mb-3">
+            <%= form.label :start_time, class: "form-label" %>
+            <%= form.datetime_local_field :start_time, class: "form-control", required: true %>
+            <div class="invalid-feedback">
+              Please select a start time.
+            </div>
+          </div>
+          <div class="mb-3">
+            <%= form.label :end_time, class: "form-label" %>
+            <%= form.datetime_local_field :end_time, class: "form-control", required: true %>
+            <div class="invalid-feedback">
+              Please select a end time.
+            </div>
+          </div>
+          <div class="mb-3">
+            <%= form.label :batch_id, "Batch", class: "form-label" %>
+            <%= form.collection_select :batch_id, current_account.batches.all, :id, :name, { prompt: "Select Batch" }, class: "form-select text-muted", required: true %>
+            <div class="invalid-feedback">
+              Please select a batch_id.
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary btn-sm" data-bs-dismiss="modal">Cancel</button>
+            <%= form.submit "Submit", class: "btn btn-theme btn-sm"%>
+          </div>
+        </div>
+      <% end %>      
+    </div>
+  </div>
+</div>

@@ -1,0 +1,9 @@
+<% if @notification.read %>
+  var notificationItem = document.querySelector('[data-notification-id="<%= @notification.id %>"]');
+  if (notificationItem) {
+    notificationItem.classList.add('read');
+    notificationItem.querySelector('.mark-as-read').style.color = 'skyblue';
+  }
+<% else %>
+  alert('Failed to mark as read');
+<% end %>

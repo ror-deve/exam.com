@@ -1,0 +1,5 @@
+<% if @subject %>
+  $("#subject-form").html("<%= j render 'manage/subjects/form', subject: @subject %>");
+  $('#subject-model').modal('show');
+  ApplicationController();
+<% end %>

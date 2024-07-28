@@ -1,0 +1,21 @@
+<div class="pagetitle">
+  <nav>
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item"><a href="/">Home</a></li>
+      <li class="breadcrumb-item active"><%= link_to 'Batches', batches_path %></li>
+    </ol>
+  </nav>
+</div>
+<hr>
+<div class="row">
+  <div class="col-lg-12">
+    <span class="entity-title">Batches</span>
+  </div>
+</div>
+<div class="container-fluid">
+  <div class="col-lg-12 col-sm-12 mt-3">
+    <div class="row">
+      <%= render partial: "batches", locals: { batches: @batches } %>
+    </div>
+  </div>
+</div>

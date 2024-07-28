@@ -1,0 +1,7 @@
+$("#userAvatar").html("<%= j render 'users/user_avatar', circle: false%>")
+$("#userAvatarMain").html("<%= j render 'users/user_avatar', circle: false%>")
+$("#userAvatarHeader").html("<%= j render 'users/user_avatar', circle: true%>")
+
+<% if @notification %>
+  pushNotify('<%= @notification[:status] %>', '<%= @notification[:title] %>', '<%= @notification[:message] %>');
+<% end %>

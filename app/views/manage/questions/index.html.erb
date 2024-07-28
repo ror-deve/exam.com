@@ -1,0 +1,51 @@
+<div class="pagetitle">
+  <nav>
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item"><a href="/">Home</a></li>
+      <li class="breadcrumb-item"><%= link_to 'Exams', manage_account_exams_path %></li>
+      <li class="breadcrumb-item"><%= link_to 'Papers', manage_account_exam_papers_path %></li>
+      <li class="breadcrumb-item active"><%= link_to 'Questions', manage_account_exam_paper_questions_path %></li>
+    </ol>
+  </nav>
+</div>
+<hr>
+<div class="exam-list">
+  <div class="row">
+    <div class="col-lg-12">
+      <span class="entity-title"><%= @paper.name %> - Papers</span>
+      <div class="float-end">
+        <div class="btn-group" role="group">
+          <%= link_to new_manage_account_exam_paper_question_path(@current_account, @paper.exam_id, @paper),remote: true, class: "btn btn-theme btn-sm" do %>
+            <i class="bi bi-person-plus-fill"></i>
+            Add
+          <% end %>
+          <div class="btn-group-separator"></div>
+          <%= link_to new_manage_account_exam_paper_question_path(@current_account, @paper.exam_id, @paper),remote: true, class: "btn btn-theme btn-sm" do %>
+            <i class="bi bi-upload"></i>
+            Import
+          <% end %>
+          <div class="btn-group-separator"></div>
+          <%= link_to new_manage_account_exam_paper_question_path(@current_account, @paper.exam_id, @paper),remote: true, class: "btn btn-theme btn-sm" do %>
+            <i class="bi bi-download"></i>
+            Export
+          <% end %>
+        </div>
+      </div>
+    </div>
+  </div>
+  <br>
+  <div class="row">
+    <div class="col-lg-12">
+      <div class="container-fluid ListTableData" id="question-list">
+      <%= render partial: "questions_data", locals: { questions: @questions } %>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div id="question-form"></div>
+<%= render "manage/shared/delete_confirmation" %>
+
+<script>
+  QuestionController();
+</script>

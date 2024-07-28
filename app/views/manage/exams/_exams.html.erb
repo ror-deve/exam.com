@@ -1,0 +1,67 @@
+<div class="row">
+  <% exams.each do |exam| %>
+    <div id="exam_<%= exam.id %>" class="col-md-3 mb-3">
+      <div class="card custom-exam-card">
+        <div class="card-header d-flex justify-content-between align-items-center">
+          <%= link_to exam.name, manage_account_exam_papers_path(@current_account, exam), class: "link-text" %>
+        </div>
+        <div class="card-body">
+          <ul class="list-group">
+            <li class="list-group-item">
+              <div class="d-flex justify-content-between">
+                <span class="small-font">Start at</span>
+                <span class="small-font"><%= exam.start_time %></span>
+              </div>
+            </li>
+            <li class="list-group-item">
+              <div class="d-flex justify-content-between">
+                <span class="small-font">Finish at</span>
+                <span class="small-font"><%= exam.end_time %></span>
+              </div>
+            </li>
+            <li class="list-group-item">
+              <div class="d-flex justify-content-between">
+                <span class="small-font">Batch</span>
+                <span class="small-font"><%= exam.batch&.name %></span>
+              </div>
+            </li>
+            <li class="list-group-item">
+              <div class="d-flex justify-content-between">
+                <span class="small-font">Institute</span>
+                <span class="small-font"><%= exam.account.name %></span>
+              </div>
+            </li>
+            <li class="list-group-item">
+              <div class="d-flex justify-content-between">
+                <%= link_to manage_account_exam_papers_path(@current_account, exam) do %>
+                  <i class="bi bi-file-earmark"></i> Papers
+                <% end %>
+                <%= link_to exam.papers.count, manage_account_exam_papers_path(@current_account, exam) %>
+              </div>
+            </li>
+          </ul>
+        </div>
+        <div class="card-footer">
+          <div class="d-flex justify-content-end">
+            <div class="btn-group" role="group" aria-label="Basic example">
+              <%= link_to manage_account_exam_path(@current_account, exam), method: :GET, remote: true, class: "btn btn-theme btn-sm" do %>
+                <i class="bi bi-eye-fill" title="Show"></i>
+              <% end %>&nbsp;
+              <%= link_to edit_manage_account_exam_path(@current_account, exam), method: :GET, remote: true, class: "btn btn-theme btn-sm" do %>
+                <i class="bi bi-pencil" title="Edit"></i>
+              <% end %>&nbsp;
+              <%= link_to "javascript:void(0);", class:"btn btn-sm btn-danger delete examDelete", data: { bs_toggle: "modal", bs_target: "#DeleteConfirmation", account_id: current_account.id, exam_id: exam.id } do %>
+                <i class="bi bi-trash" title="Delete"></i>
+              <% end %>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  <% end %>
+  
+  <!-- Exam Pagination-->
+  <% if @exams&.any? %>
+    <%= render partial: 'shared/pagination', locals: { data: @exams, controller_name: 'manage/exams' } %>
+  <% end %>
+</div>

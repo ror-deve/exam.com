@@ -1,0 +1,8 @@
+<%# locals: (circle: 'false') -%>
+<div class="row">
+  <% if current_student %>
+    <%= image_tag current_student.avatar.attached? ? current_student.avatar : 'avatar.png', alt: "", class: "img-thumbnail #{circle == true ? 'rounded-circle' : ''}"  %>
+  <% else %>
+    <%= image_tag current_teacher.avatar.attached? ? current_teacher.avatar : 'avatar.png', alt: "", class: "img-thumbnail #{circle == true ? 'rounded-circle' : ''}"  %>
+  <% end %>
+</div>

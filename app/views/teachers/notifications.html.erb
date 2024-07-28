@@ -1,0 +1,48 @@
+<div class="container">
+  <div class="row justify-content-center">
+    <div class="col-12 col-lg-10 col-xl-8 mx-auto">
+      <h2 class="h3 mb-4 page-title">Notifications</h2>
+      <div class="my-4">
+        <ul class="nav nav-tabs mb-4" id="myTab" role="tablist">
+          <li class="nav-item">
+            <%= link_to teacher_notifications_path(type: 'unread'), class: "nav-link #{params[:type] == 'unread' ? 'active' : ''}", id: "unread-tab" do %>
+              Unread
+            <% end %>
+          </li>
+          <li class="nav-item">
+            <%= link_to teacher_notifications_path, class: "nav-link #{params[:type] != 'unread' ? 'active' : ''}",id: "all-tab" do %>
+              All
+            <% end %>
+          </li>
+        </ul>
+        <div class="tab-content" id="myTabContent">
+          <div class="tab-pane fade show active" id="unread" role="tabpanel" aria-labelledby="unread-tab">
+            <h5 class="mb-0 mt-3"><%= params[:type] == 'unread' ? 'Unread' : 'All' %> Notifications</h5>
+            <hr class="my-4" />
+            <div class="list-group mb-5 shadow">
+              <% @notifications.each do |notification| %>
+                <div class="list-group-item <%= 'read' if notification.read? %>" data-notification-id="<%= notification.id %>">
+                  <div class="row align-items-center">
+                    <div class="col-auto">
+                      <i class="<%= icon_class_for(notification) %>"></i>
+                    </div>
+                    <div class="col">
+                      <p class="text-muted mb-0"><%= notification.message %></p>
+                    </div>
+                    <div class="col-auto">
+                      <% if notification.read? %>
+                        <i class="bi bi-check-all" style="color: skyblue;"></i>
+                      <% else %>
+                        <%= link_to '', mark_as_read_path(notification), method: :patch, remote: true, class: 'bi bi-check-all mark-as-read', data: { notification_id: notification.id }, style: 'color: lightgray;' %><span class="read ms-1">Mark as read</span>
+                      <% end %>
+                    </div>
+                  </div>
+                </div>
+              <% end %>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

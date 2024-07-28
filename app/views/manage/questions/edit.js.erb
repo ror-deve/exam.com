@@ -1,0 +1,5 @@
+<% if @question %>
+  $("#question-form").html("<%= j render 'manage/questions/form', question: @question %>");
+  $('#question-model').modal('show');
+  ApplicationController();
+<% end %>

@@ -1,0 +1,5 @@
+<% if @subjects.present? %>
+  $("#subjects-list").html("<%= j render 'manage/subjects/subjects', subjects: @subjects %>");
+<% else %>
+  $("#subjects-list").html("<p class='result-not-found'>Subject not found with '<%= params[:query]%>'");
+<% end %>

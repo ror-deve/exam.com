@@ -1,0 +1,25 @@
+<div class="modal fade" id="subjectmodel" tabindex="-1">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h6 class="modal-title">New Subject</h6>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <%= form_for @subject, url: manage_account_subjects_path(@current_account), remote: true, html: { novalidate: true, class: "g-3 needs-validation" } do |form| %>
+        <div class="modal-body">
+          <div class="mb-3">
+            <%= form.label :name, "Subject Name:", class: "form-label" %>
+            <%= form.text_field :name, class: "form-control", required: true  %>
+            <div class="invalid-feedback">
+                Please provide a name
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary btn-sm" data-bs-dismiss="modal">Cancel</button>
+            <%= form.submit "Submit", class: "btn btn-theme btn-sm" %>
+          </div>
+        </div>
+      <% end %>  
+    </div>
+  </div>
+</div>

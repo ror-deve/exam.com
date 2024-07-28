@@ -1,0 +1,52 @@
+<div class="card-body">
+  <div class="pt-4 pb-2">
+    <a href="/" class="logo d-flex align-items-center w-auto">
+      <%= image_tag "s_logo.png", alt: "logo" %>
+    </a>
+    <h5 class="card-title text-center pb-0 fs-4">Login to Your Account</h5>
+    <p class="text-center small">Enter your username & password to login</p>
+  </div>
+  <% flash.each do |key, value| %>
+    <div class="alert <%= flash_class(key) %>">
+      <a class="close" data-bs-dismiss="alert">×</a>
+      <%= value %>
+    </div>
+  <% end %>
+  <%= form_for(resource, as: resource_name, url: session_path(resource_name), html: { novalidate: true, class: "row g-3 needs-validation" }, data: { turbo: false }) do |f| %>
+    <div class="col-12">
+      <label for="username" class="form-label">Email or Username</label>
+      <div class="input-group has-validation">
+        <span class="input-group-text" id="inputGroupPrepend">@</span>
+        <%= f.email_field :email, autofocus: true, class: "form-control", id: "username", required: true%>
+        <div class="invalid-feedback">Please enter your email or username.</div>
+      </div>
+    </div>
+    <div class="col-12">
+      <label for="password" class="form-label">Password</label>
+      <%= f.password_field :password, autocomplete: "current-password", class: "form-control", id: "password", required: true%>
+      <div class="invalid-feedback">Please enter your password!</div>
+    </div>
+    <div class="col-12">
+      <div class="form-check">
+        <% if devise_mapping.rememberable? %>
+          <%= f.check_box :remember_me, class: "form-check-input", name: "remember", value: "true", id: "rememberMe" %>
+          <label class="form-check-label" for="rememberMe">Remember me</label>
+        <% end %>
+      </div>
+    </div>
+    <div class="col-12">  
+      <%= f.submit "Log in", class: "btn btn-theme w-100" %>
+    </div> 
+  <% end %>
+  <br>
+  <div class="col-12">
+    <% if resource_name == :teacher %>
+      Are you a new teacher?
+      <%= link_to "Register", new_teacher_registration_path %>
+    <% else %>
+      Are you a new student?
+      <%= link_to "Register", new_student_registration_path %>
+    <% end %>
+    </div>
+    <!-- <%#= render "devise/shared/links" %> -->
+</div>

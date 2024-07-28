@@ -1,0 +1,35 @@
+<% subjects.each do |subject| %>
+  <div id="subject_<%= subject.id %>" class="col-lg-4 col-md-6 mb-4 mb-lg-0">
+    <div class="card rounded border-0">
+      <div class="card-body p-3">
+        <div class="float-end text-theme">
+          <%= link_to new_manage_account_subject_topic_path(@current_account, subject), method: :GET, remote: true, class: 'btn btn-sm btn-theme' do %>
+            <i class="bi bi-plus-circle-fill"></i> Add Topic
+          <% end %>
+          <%= link_to edit_manage_account_subject_path(@current_account, subject), method: :GET, remote: true, class: 'btn btn-sm btn-theme' do %>
+            <i class="bi bi-pencil"></i>
+          <% end %>
+          <%= link_to "javascript:void(0);", class:"btn btn-sm btn-danger delete subjectDelete", data: { bs_toggle: "modal", bs_target: "#DeleteConfirmation", account_id: current_account.id, subject_id: subject.id } do %>
+            <i class="bi bi-trash" title="Delete"></i>
+          <% end %>
+        </div>
+        <h4><i class="bi bi-journal-text mb-3 text-theme"></i></h4>
+        
+        <h5><%= subject.name %></h5>
+        <p class="small text-muted font-italic">Topics:
+          <span class="text-theme">
+            <span class="badge bg-danger"><%= subject.topics&.count %></span>
+          </span>
+        </p>
+        <%= link_to manage_account_subject_topics_path(@current_account, subject) do %>
+          <span class="text-theme">---> CLick to check topics</span>
+        <% end %>
+      </div>
+    </div>
+  </div>
+<% end %>
+
+<!-- Subject Pagination-->
+<% if @subjects&.any? %>
+  <%= render partial: 'shared/pagination', locals: { data: @subjects, controller_name: 'manage/subjects' } %>
+<% end %> 

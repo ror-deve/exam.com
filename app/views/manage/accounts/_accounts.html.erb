@@ -1,0 +1,62 @@
+<div class="row">
+  <% @accounts.each do |account| %>
+    <div class="col-md-4 mb-3">
+      <div class="card custom-exam-card">
+        <div class="card-header d-flex justify-content-between align-items-center">
+          <h6><%= account.name %></h6>
+        </div>
+        <div class="card-body">
+          <ul class="list-group">
+            <li class="list-group-item">
+              <div class="d-flex justify-content-between">
+                <span class="small-font">Email:</span>
+                <span class="small-font"><%= account.email %></span>
+              </div>
+            </li>
+            <li class="list-group-item">
+              <div class="d-flex justify-content-between">
+                <span class="small-font">Phone:</span>
+                <span class="small-font"><%= account.phone %></span>
+              </div>
+            </li>
+            <li class="list-group-item">
+              <div class="d-flex justify-content-between">
+                <span class="small-font">Created at:</span>
+                <span class="small-font"><%= account.created_at %></span>
+              </div>
+            </li>
+            <li class="list-group-item">
+              <div class="d-flex justify-content-between">
+                <span class="small-font">Exams:</span>
+                <span class="small-font"><%= account.exams.count %></span>
+              </div>
+            </li>
+            <li class="list-group-item">
+              <div class="d-flex justify-content-between">
+                <span class="small-font">Batches:</span>
+                <span class="small-font"><%= account.batches.count %></span>
+              </div>
+            </li>
+            <li class="list-group-item">
+              <div class="d-flex justify-content-between">
+                <span class="small-font">Students:</span>
+                <span class="small-font"><%= account.students.count %></span>
+              </div>
+            <li class="list-group-item">
+              <div class="d-flex justify-content-between">
+                <% is_admin = current_teacher.is_admin?(account.id) %>
+                <span class="small-font"><%= link_to_if is_admin, 'Teachers:', manage_account_teachers_path(account) %></span>
+                <span class="small-font"><%= link_to_if is_admin, account.teachers.count, manage_account_teachers_path(account) %></span>
+              </div>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  <% end %>
+  
+  <!-- Account Pagination-->
+  <% if @accounts&.any? %>
+    <%= render partial: 'shared/pagination', locals: { data: @accounts, controller_name: 'manage/accounts' } %>
+  <% end %> 
+</div>

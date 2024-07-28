@@ -1,0 +1,30 @@
+<div class="row">
+  <% topics.each do |topic| %>
+    <div id="topic_<%= topic.id %>" class="col-md-4 mb-1">
+      <div class="card">
+        <div class="card-header d-flex justify-content-between align-items-center">
+          <h5 class="mb-0"><%= topic.name %></h5>
+          <div>
+            <%= link_to edit_manage_account_subject_topic_path(@current_account, @subject, topic), method: :GET, remote: true, class: "btn btn-sm btn-theme" do %>
+              <i class="bi bi-pencil" title="Edit"></i>
+            <% end %>
+            <%= link_to "javascript:void(0);", class:"btn btn-sm btn-danger delete topicDelete", data: { bs_toggle: "modal", bs_target: "#DeleteConfirmation", account_id: current_account.id, subject_id: @subject.id, topic_id: topic.id } do %>
+              <i class="bi bi-trash" title="Delete"></i>
+            <% end %>
+          </div>
+        </div>
+        <ul class="list-group list-group-flush">
+          <li class="list-group-item d-flex justify-content-between align-items-center">
+            <span>Questions</span>
+            <span class="badge bg-secondary"><%= topic.questions.count %></span>
+          </li>
+        </ul>
+      </div>
+    </div>
+  <% end %>
+
+  <!-- Topic Pagination-->
+  <% if @topics&.any? %>
+    <%= render partial: 'shared/pagination', locals: { data: @topics, controller_name: 'manage/topics' } %>
+  <% end %> 
+</div>

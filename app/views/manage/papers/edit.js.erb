@@ -1,0 +1,6 @@
+<% if @paper %>
+  $("#paper-form").html("<%= j render 'manage/papers/form', paper: @paper %>");
+  $('#paper-model').modal('show');
+  ApplicationController();
+<% end %>
+

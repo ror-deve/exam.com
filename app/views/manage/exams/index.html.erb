@@ -1,0 +1,60 @@
+<div class="pagetitle">
+  <nav>
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item"><a href="/">Home</a></li>
+      <li class="breadcrumb-item active"><%= link_to 'Exams', manage_account_exams_path %></li>
+    </ol>
+  </nav>
+</div>
+<hr>
+<div class="exam-list">
+  <div class="row">
+    <div class="col-lg-12">
+      <span class="entity-title">Exams</span>
+      <div class="float-end">
+        <div class="btn-group" role="group">
+          <%= link_to new_manage_account_exam_path(@current_account), method: :GET, remote: true, class: "btn btn-sm btn-theme abc" do %>
+              <i class="bi bi-plus-circle-fill"></i> New Exam
+            <% end %>
+        </div>
+      </div>
+    </div>
+  </div>
+  <br>
+  <div class="row">
+    <div class="col-lg-12">
+      <div class="card">
+        <div class="card-body p-0">
+          <%= form_tag(manage_account_exams_path(@current_account), method: :get, remote: true, class: "search-form") do %>
+            <div class="input-group">
+              <%= text_field_tag :query, params[:query], class: "form-control", id: "search-exam-input", placeholder: "Search exam" %>
+              <button type="submit" class="btn btn-theme" id="search-exam-btn"><i class="bi bi-search"></i></button>
+            </div>
+          <% end %>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <div class="row">
+    <div class="col-lg-12">
+      <div id="exam-list">
+        <%= render partial: "exams", locals: { exams: @exams } %>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div id="exam-form"></div>
+
+<%= render "manage/shared/delete_confirmation" %>
+
+<div class="row">
+  <div class="col-md-8">
+    <canvas id="myChart" style="width: 50px; height: 20px;"></canvas>
+  </div>
+</div>
+
+<script>
+  ExamController();
+</script>

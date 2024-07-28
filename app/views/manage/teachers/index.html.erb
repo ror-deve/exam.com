@@ -1,0 +1,39 @@
+<div>
+  <h6 class="text-uppercase pull-left"><%= @account.name %></h6>
+  <p class="pull-right">
+    <%= link_to new_manage_account_teacher_path(@account), class: "btn btn-default btn-sm" do %>
+      <i class="bi bi-plus"></i>
+      Add
+    <% end %>
+  </p>
+  <div class="clearfix"></div>
+</div>
+
+<table class="table">
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Email</th>
+      <th>Phone</th>
+      <th>Admin</th>
+      <th>Actions</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @teachers.each do |teacher| %>
+      <tr>
+        <td><%= teacher.name %></td>
+        <td><%= teacher.email %></td>
+        <td>******<%= teacher.phone[-4..-1].to_s %></td>
+        <td>
+          <% is_admin = teacher.is_admin?(@account.id) %>
+          <%= link_to manage_account_teacher_path(@account, teacher.id), method: :put, data: { confirm: "Are you sure?" } do %>
+            <span class="<%= is_admin ? 'label-primary' : 'label-default' %>"><%= is_admin ? 'Yes' : 'No' %></span>
+          <% end %>
+        </td>
+        <td><%= link_to 'Remove', manage_account_teacher_path(@account, teacher), method: :delete, data: { confirm: 'Are you sure?' }, class: "btn btn-default btn-xs" %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+<br>

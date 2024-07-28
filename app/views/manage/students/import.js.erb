@@ -1,0 +1,4 @@
+<% if @notification.present? %>
+  pushNotify('<%= @notification[:status] %>', '<%= @notification[:title] %>', '<%= @notification[:message] %>');
+  $('#ImportConfirmation').modal('hide');
+<% end %>

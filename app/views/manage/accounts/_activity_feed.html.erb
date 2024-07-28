@@ -1,0 +1,52 @@
+<div class="card">
+  <div class="filter">
+    <a class="icon" href="#" data-bs-toggle="dropdown"><i class="bi bi-three-dots"></i></a>
+    <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
+      <li class="dropdown-header text-start">
+        <h6>Filter</h6>
+      </li>
+      <li><%= link_to "Today", { date_filter: "today" }, class: "dropdown-item" %></li>
+      <li><%= link_to "This Week", { date_filter: "this_week" }, class: "dropdown-item" %></li>
+      <li><%= link_to "This Month", { date_filter: "this_month" }, class: "dropdown-item" %></li>
+      <li><%= link_to "This Year", { date_filter: "this_year" }, class: "dropdown-item" %></li>
+    </ul>
+  </div>
+  <div class="card-body scrollbar">
+    <h5 class="card-title">Recent Activity</h5>
+    <div class="activity">
+      <% if current_teacher %>
+        <% current_teacher_audits = filter_and_fetch_audits_teacher(current_teacher, params[:date_filter]) %>
+
+        <!-- Show the most recent sign-in audit -->
+        <% sign_in_audits = current_teacher_audits.select { |audit| audit.audited_changes.key?('sign_in_count') } %>
+        <% last_sign_in_audit = sign_in_audits.first %> <!-- Get the most recent sign-in audit -->
+        <% if last_sign_in_audit && authorized_to_access_audit_teacher?(last_sign_in_audit, current_teacher) %>
+          <div class="activity-item d-flex">
+            <div class="activite-label"><%= time_ago_in_words(last_sign_in_audit.created_at) %></div>
+            <i class='bi bi-circle-fill activity-badge text-info align-self-start'></i>
+            <div class="activity-content">
+              A teacher signed in
+            </div>
+          </div>
+        <% end %>
+
+        <!-- Show profile update audits -->
+        <% profile_update_audits = current_teacher_audits.select do |audit| 
+          audit.action == 'update'
+        end %>
+        <% profile_update_audits.each do |audit| %>
+          <% if authorized_to_access_audit_teacher?(audit, current_teacher) %>
+            <div class="activity-item d-flex">
+              <div class="activite-label"><%= time_ago_in_words(audit.created_at) %></div>
+              <i class='bi bi-circle-fill activity-badge text-success align-self-start'></i>
+              <div class="activity-content">
+                A teacher profile was updated
+              </div>
+            </div>
+          <% end %>
+        <% end %>
+
+      <% end %>
+    </div>
+  </div>
+</div>

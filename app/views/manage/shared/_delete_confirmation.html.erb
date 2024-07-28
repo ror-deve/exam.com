@@ -1,0 +1,25 @@
+<div class="modal fade" id="DeleteConfirmation" tabindex="-1">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h6 class="modal-title deleteConfirmation">Delete Confirmation</h6>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <div class="row">
+          <div class="col-sm-6">
+            <%= image_tag 'remove-confirmation.png', class: "removeConfirmation"%>
+          </div>
+          <div class="col-sm-6 deleteConfirmationText">
+            <h5>Are you sure you want to delete this?</h5>
+            <p>This action cannot be undone.</p>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-sm btn-secondary" data-bs-dismiss="modal">Close</button>
+        <%= link_to "Confirm", "", method: :delete, remote: true, id: "DeleteConfirmationLink", class: "btn btn-theme btn-sm" %>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,46 @@
+<div class="modal fade" id="question-model" tabindex="-1">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title"><%= action_name == 'new' ? 'New Question' : 'Edit Question'%></h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+        <%= form_for @question, url: @question.new_record? ? manage_account_exam_paper_questions_path(@current_account) : manage_account_exam_paper_question_path(@current_account, @exam, @paper), remote: true, html: { novalidate: true, class: "g-3 needs-validation" } do |form| %>
+          <div class="modal-body">
+          <div id="QuestionErrors"></div>
+            <div class="mb-3">
+              <%= form.label :title, 'Question', class: 'form-label' %>
+              <%= form.text_field :title, class: 'form-control', required: true %>
+              <div class="invalid-feedback">
+                Please enter the question title.
+              </div>
+            </div>
+            <div class="mb-3">
+              <%= form.label :topic_id, 'Topic', class: 'form-label' %>
+              <%= form.collection_select :topic_id, Topic.all, :id, :name, { prompt: 'Select Topic' }, class: 'form-select text-muted', required: true %>
+              <div class="invalid-feedback">
+                Please select a topic.
+              </div>
+            </div>
+            <% (1..5).each do |i| %>
+              <div class="mb-3 input-group">
+                <%= form.text_field "option#{i}".to_sym, class: 'form-control', placeholder: "Option #{i}", required: i <= 3 %>
+                <span class="input-group-text">
+                  <%= check_box_tag "answers[option#{i}]", '1', @question.answer&.include?("option#{i}") %>
+                </span>
+                <% if i == 3 %>
+                  <div class="invalid-feedback">
+                    Please provide a value for at least 3 options.
+                  </div>
+                <% end %>
+              </div>
+            <% end %>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary btn-sm" data-bs-dismiss="modal">Cancel</button>
+            <%= form.submit "Submit", class: "btn btn-theme btn-sm" %>
+          </div>
+        <% end %>
+    </div>
+  </div>
+</div>

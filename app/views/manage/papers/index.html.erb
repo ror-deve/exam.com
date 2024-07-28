@@ -1,0 +1,41 @@
+<div class="pagetitle">
+  <nav>
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item"><a href="/">Home</a></li>
+      <li class="breadcrumb-item "><%= link_to 'Exams', manage_account_exams_path %></li>
+      <li class="breadcrumb-item active"><%= link_to 'Papers', manage_account_exam_papers_path %></li>
+    </ol>
+  </nav>
+</div>
+<hr>
+<div class="paper-list">
+  <div class="row">
+    <div class="col-lg-12">
+      <span class="entity-title"><%= @exam.name %> - Papers</span>
+      <div class="float-end">
+        <div class="btn-group" role="group">
+           
+          <%= link_to new_manage_account_exam_paper_path(@current_account, @exam), remote: true, class: "btn btn-sm btn-theme abc" do %>
+            <i class="bi bi-plus-circle-fill"></i> New Paper
+          <% end %>
+        </div>
+      </div>
+    </div>
+  </div>
+  <br>
+   
+  <div class="row">
+    <div class="col-lg-12">
+      <div class="container-fluid ListTableData" id="paper-list">
+        <%= render partial: "papers_data", locals: { papers: @papers } %>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div id="paper-form"></div>
+<%= render "manage/shared/delete_confirmation" %>
+
+<script>
+  PaperController();
+</script>

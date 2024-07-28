@@ -1,0 +1,96 @@
+<div class="pagetitle">
+  <h1>Dashboard</h1>
+  <nav>
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item"><a href="/">Home</a></li>
+      <li class="breadcrumb-item active">Dashboard</li>
+    </ol>
+  </nav>
+</div>
+<section class="section dashboard">
+  <div class="row">
+    <div class="col-lg-8">
+      <div class="row">
+        <div class="col-xxl-4 col-md-6">
+          <%= link_to exams_path, class: 'card info-card sales-card' do %>
+            <div class="card-body">
+              <h5 class="card-title">Exams <span>| Total Exams</span></h5>
+              <div class="d-flex align-items-center">
+                <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
+                  <i class="bi bi-card-checklist"></i>
+                </div>
+                <div class="ps-3">
+                  <h6><%= current_student.exams&.count %></h6>
+                  <span class="text-muted small pt-2 ps-1">You have total <span class="text-success small pt-1 fw-bold"><%= current_student.exams&.includes(:papers).flat_map(&:papers)&.count %></span> Papers</span>
+                </div>
+              </div>
+            </div>
+          <% end %>
+        </div>
+        <div class="col-xxl-4 col-xl-12">
+          <%= link_to pending_student_exam_papers_path(current_student, @exams), class: 'card info-card customers-card' do %>
+            <div class="card-body">
+              <h5 class="card-title">Pending <span>| Pending Paper</span></h5>
+              <div class="d-flex align-items-center">
+                <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
+                  <i class="bi bi-envelope-paper"></i>
+                </div>
+                <div class="ps-3">
+                  <h6><%= current_student.exams.joins(:papers).map(&:papers).count %></h6>
+                  <span class="text-muted small pt-2 ps-1"> Total <span class="text-success small pt-1 fw-bold"><%= current_student.paper_sessions.where(status: 'pending').count %></span> pending paper</span>
+                </div>
+              </div>
+            </div>
+          <% end %>
+        </div>
+        <div class="col-xxl-4 col-xl-12">
+          <%= link_to complete_student_exam_papers_path(current_student, @exams), class: 'card info-card customers-card' do %>
+            <div class="card-body">
+              <h5 class="card-title">Complete <span>| Complete Paper</span></h5>
+              <div class="d-flex align-items-center">
+                <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
+                  <i class="bi bi-envelope-paper-fill"></i>
+                </div>
+                <div class="ps-3">
+                  <h6><%= current_student.exams.joins(:papers).map(&:papers).count %></h6>
+                  <span class="text-muted small pt-2 ps-1"> Total <span class="text-success small pt-1 fw-bold"><%= current_student.paper_sessions.where(status: 'complete').count %></span> complete paper</span>
+                </div>
+              </div>
+            </div>
+          <% end %>
+        </div>
+        <div class="col-6">
+          <div class="card">
+            <div class="card-body pb-0">
+              <h5 class="card-title">Exam <span>| Papers</span></h5>
+              <div id="examsChart" style="min-height: 425px;" class="echart" data-subjects='<%= raw current_student.exams.joins(:papers).map{|e| {value: e.papers.count, name: e.name}}.to_json %>'></div>
+              </div>
+          </div>
+        </div>
+        <div class="col-6">
+          <div class="card" style="max-height: 473px;">
+            <div class="card-body scrollbar">
+              <h5 class="card-title p-2">Paper Sessions <span>| Highest Percentage Paper</span></h5>
+              <ul class="list-group">
+                <% sorted_paper_sessions = current_student.paper_sessions.order(percentage: :desc) %>
+                <% sorted_paper_sessions.each do |paper_session| %>
+                  <li class="list-group-item d-flex justify-content-between align-items-center">
+                    <%= paper_session.paper.name %>
+                    <span class="badge bg-primary rounded-pill"><%= paper_session.percentage %>%</span>
+                  </li>
+                <% end %>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-lg-4">
+      <%= render 'activity_feed' %>
+    </div>
+  </div>
+</section>
+<script>
+  ChartController();
+</script>
+

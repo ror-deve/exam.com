@@ -1,0 +1,13 @@
+<%= turbo_stream.update "flash" do %>
+    <%= render "shared/flash_messages" %>
+  <% end %>
+  <%= turbo_stream.update "userAvatar" do %>
+    <%= render 'users/user_avatar', circle: true  %>
+  <% end %>
+  <%= turbo_stream.update "userAvatarMain" do %>
+    <%= render 'users/user_avatar', circle: false  %>
+  <% end %>
+  <%= turbo_stream.update "userAvatarHeader" do %>
+    <%= render 'users/user_avatar', circle: true  %>
+  <% end %>
+  

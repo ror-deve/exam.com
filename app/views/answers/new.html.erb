@@ -1,0 +1,64 @@
+<div class="col-md-8 col-md-offset-2">
+  <div class="panel panel-default">
+    <div class="panel-heading">
+      <div class="panel-title">Question <%= $c %></div>
+    </div>
+    <div class="panel-body">
+      <%= simple_format(@question.title.html_safe) %>
+    </div>
+  </div>
+  <br>
+  <%= form_tag paper_session_answers_path(@paper_session, question_id: @question.id, correct_answer: @question.answer) do %>
+    <%= hidden_field_tag :answer %>
+    <div id="answers" class="list-group">
+      <% (1..5).each do |i| %>
+        <% if @question["option#{i}"].present? %>
+          <%= link_to "#", class: 'list-group-item' do %>
+            <span class="fa fa-square-o" data-answer="option<%= i %>"></span>
+            &nbsp;
+            <%= @question["option#{i}"] %>
+          <% end %>
+        <% end %>
+      <% end %>
+    </div>
+    <div class="divs">
+      <div class="pull-left">
+        <%= submit_tag "Next Question", class: 'btn btn-primary' %>
+      </div>
+      <div class="pull-right">
+        <%= submit_tag "Skip Question", class: 'btn btn-default' %>
+        <%= submit_tag "Quit Paper", class: 'btn btn-danger' %>
+      </div>
+      <div class="clearfix"></div>
+    </div>
+  <% end %>
+</div>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    document.querySelectorAll('#answers.list-group a').forEach(function(anchor) {
+      anchor.addEventListener('click', function(event) {
+        event.preventDefault();
+        
+        var element = this;
+        var checked = document.querySelector('#answers .fa-check-square-o');
+        
+        if (checked) {
+          checked.classList.remove('fa-check-square-o');
+          checked.classList.add('fa-square-o');
+        }
+        
+        element = element.querySelector('span.fa');
+        if (element) {
+          element.classList.remove('fa-square-o');
+          element.classList.add('fa-check-square-o');
+        }
+        
+        var selectedAnswer = document.querySelector('#answers .fa-check-square-o');
+        if (selectedAnswer) {
+          document.getElementById('answer').value = selectedAnswer.getAttribute('data-answer');
+        }
+      });
+    });
+  });
+</script>

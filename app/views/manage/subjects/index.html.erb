@@ -1,0 +1,55 @@
+<div class="pagetitle">
+  <nav>
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item"><a href="/">Home</a></li>
+      <li class="breadcrumb-item active"><%= link_to 'Subjects', manage_account_subjects_path %></li>
+    </ol>
+  </nav>
+</div>
+<hr>
+<div class="subject-list">
+  <div class="row">
+    <div class="col-lg-12">
+      <span class="entity-title">Subjects</span>
+      <div class="float-end">
+        <div class="btn-group" role="group">
+          <%= link_to new_manage_account_subject_path(@current_account), method: :GET, remote: true, class: "btn btn-sm btn-theme abc" do %>
+            <i class="bi bi-plus-circle-fill"></i> New Subject
+          <% end %>
+        </div>
+      </div>
+    </div>
+  </div>
+  <br>
+  <div class="row">
+    <div class="col-lg-12">
+      <div class="card">
+        <div class="card-body p-0">
+          <%= form_tag(manage_account_subjects_path(@current_account, @subject), method: :get, remote: true, class: "search-form") do %>
+            <div class="input-group">
+              <%= text_field_tag :query, params[:query], class: "form-control", id: "search-subject-input", placeholder: "Search subject" %>
+              <button type="submit" class="btn btn-theme" id="search-subject-btn"><i class="bi bi-search"></i></button>
+            </div>
+          <% end %>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="container-fluid">
+    <div class="col-lg-12 col-sm-12 mt-3">
+      <div class="row" id="subjects-list">
+        <%= render partial: "subjects", locals: { subjects: @subjects } %>
+      </div>
+    </div>
+  </div>
+</div>
+<style>
+
+</style>
+<div id="subject-form"></div>
+<div id="topic-form"></div>
+<%= render "manage/shared/delete_confirmation" %>
+
+<script>
+  SubjectController();
+</script>

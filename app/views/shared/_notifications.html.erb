@@ -1,0 +1,52 @@
+<li class="nav-item dropdown">
+  <a class="nav-link nav-icon" href="#" data-bs-toggle="dropdown">
+    <i class="bi bi-bell"></i>
+    <% if current_teacher %>
+      <span id="notification-count" class="badge bg-primary badge-number"><%= current_teacher.notifications_count %></span>
+    <% else %>
+      <span id="notification-count" class="badge bg-primary badge-number"><%= current_student.notifications_count %></span>
+    <% end %>
+  </a>
+  <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow notifications" style="max-height: 550px; overflow-y: auto;">
+    <li class="dropdown-header">
+      <% if current_teacher %>
+        <% if current_teacher.notifications_count > 0 %>
+          You have <%= current_teacher.unread_notifications_count %> unread new notifications
+          <%= link_to teacher_notifications_path(type: 'unread') do %>
+            <span class="badge rounded-pill bg-primary p-2 ms-2">View all</span>
+          <% end %>
+        <% else %>
+          You don't have any notification to read..!
+        <% end %>
+      <% else %>
+        <% if current_student.notifications_count > 0 %>
+          You have <%= current_student.unread_notifications_count %> new notifications
+          <%= link_to student_notifications_path(type: 'unread') do %>
+            <span class="badge rounded-pill bg-primary p-2 ms-2">View all</span>
+          <% end %>
+        <% else %>
+          You don't have any notification to read..!
+        <% end %>
+      <% end %>
+    </li>
+    <li id="top-notification-hr">
+      <hr class="dropdown-divider">
+    </li>
+
+    <% if current_teacher %>
+      <% current_teacher.notifications.order(created_at: 'DESC').each do |notification| %>
+        <%= notification_item(notification) %>
+      <% end %>
+      <li class="dropdown-footer">
+        <%= link_to "Show all notifications", teacher_notifications_path %>
+      </li>
+    <% else %>
+      <% current_student.notifications.each do |notification| %>
+        <%= notification_item(notification) %>
+      <% end %>
+      <li class="dropdown-footer">
+        <%= link_to "Show all notifications", student_notifications_path %>
+      </li>
+    <% end %>
+  </ul>
+</li>

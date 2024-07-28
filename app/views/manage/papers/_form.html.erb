@@ -1,0 +1,66 @@
+<div class="modal fade" id="paper-model" tabindex="-1" >
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header nav-item">
+        <h5 class="modal-title"><%= action_name == 'new' ? 'New Paper' : 'Edit Paper'%></h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <%= form_for @paper, url: @paper.new_record? ? manage_account_exam_papers_path(@current_account) : manage_account_exam_paper_path(@current_account, @exam) ,remote: true, html: { novalidate: true, class: "g-3 nav-link needs-validation" } do |form| %>
+        <div class="modal-body">
+          <div class="col-12 has-validation">
+            <%= form.label :name %>
+            <%= form.text_field :name, placeholder: "Enter paper name", class: "form-control", required: true %>
+            <div class="invalid-feedback">
+              Please enter paper  name.
+            </div>
+          </div>
+          </br>
+          <div class="col-12 has-validation">
+            <%= form.label :no_of_questions %>
+            <%= form.number_field :no_of_questions, class: "form-control", required: true %>
+            <div class="invalid-feedback">
+              Please select a no_of_questions.
+            </div>
+          </div>
+          <br>
+          <div class="col-12 has-validation">
+            <%= form.label :status %>
+            <%= form.select :status, options_for_select([['Draft', 0], ['Publish', 1]], @paper.status), { prompt: "Select status" }, class: "form-control", required: true %>
+            <div class="invalid-feedback">
+              Please select a status.
+            </div>
+          </div>
+          <br>
+          <div class="col-12 has-validation">
+            <%= form.label :duration %>
+            <%= form.text_field :duration, class: "form-control", required: true %>
+            <div class="invalid-feedback">
+              Please select a duration.
+            </div>
+          </div>
+          </br>
+          <div class="col-12 has-validation">
+            <%= form.label :marks_per_question %>
+            <%= form.number_field :marks_per_question, class: "form-control", required: true %>
+            <div class="invalid-feedback">
+              Please select a marks_per_question.
+            </div>
+          </div>
+          </br>   
+          <div class="col-12 has-validation">
+            <%= form.label :negative_marks_per_question %>
+            <%= form.select :negative_marks_per_question, options_for_select((0).downto(-10), @paper.negative_marks_per_question), { prompt: "Select negative marks per question" }, class: "form-control", required: true %>
+            <div class="invalid-feedback">
+              Please select a negative_marks_per_question.
+            </div>
+          </div>
+          </br>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary btn-sm" data-bs-dismiss="modal">Cancel</button>
+            <%= form.submit "Submit", class: "btn btn-theme btn-sm"%>
+          </div>
+        </div>
+      <% end %>
+    </div>
+  </div>
+</div>

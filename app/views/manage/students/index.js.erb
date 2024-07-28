@@ -1,0 +1,5 @@
+<% if @students.present? %>
+  $("#students-list").html("<%= j render 'manage/students/students_data', students: @students %>");
+<% else %>
+  $("#students-list").html("<p class='result-not-found'>Student not found with '<%= params[:query]%>'");
+<% end %>

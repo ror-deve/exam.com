@@ -1,0 +1,186 @@
+<% paper_names = [] %>
+<% papers.each do |paper| %>
+  <% paper_names << paper.name if @finished_paper_ids.include?(paper.id) %>
+  <% @paper_session = PaperSession.find_by(paper_id: paper.id, student_id: current_student.id) %>
+
+  <div class="col-md-3 mb-3">
+    <div class="card custom-exam-card">
+      <div class="card-header d-flex justify-content-between align-items-center">
+        <%= link_to paper.name, exam_papers_path %>
+      </div>
+      <div class="card-body">
+        <ul class="list-group">
+          <li class="list-group-item">
+            <div class="d-flex justify-content-between">
+              <span class="small-font">Duration</span>
+              <span class="small-font pointer"><%= seconds_to_time(paper.duration) %></span>
+            </div>
+          </li>
+          <li class="list-group-item">
+            <div class="d-flex justify-content-between">
+              <span class="small-font">Marks</span>
+              <span class="small-font"><%= paper.marks_per_question %></span>
+            </div>
+          </li>
+          <li class="list-group-item">
+            <div class="d-flex justify-content-between">
+              <span class="small-font">-ve Marks</span>
+              <span class="small-font"><%= paper.negative_marks_per_question %></span>
+            </div>
+          </li>
+          <li class="list-group-item">
+            <div class="d-flex justify-content-between">
+              <span class="small-font">Questions</span>
+              <span class="small-font"><%= paper.questions.count %></span>
+            </div>
+          </li>
+          <% if @finished_paper_ids.include?(paper.id) %>
+            <% correct_answers_count = @paper_session.answers.where(correct: true).count %>
+            <% correct_marks = correct_answers_count * paper.marks_per_question %>
+            <% total_marks = paper.questions.count * paper.marks_per_question %>
+            <% minimum_marks = (total_marks/3).to_i %>
+            <li class="list-group-item">
+              <div class="d-flex justify-content-between">
+                <span class="small-font">Score</span>
+                <span class="small-font"><%= "#{correct_marks}/#{total_marks}" %></span>
+              </div>
+            </li>
+            <li class="list-group-item">
+              <div class="d-flex justify-content-between">
+                <span class="small-font">Time Taken</span>
+                <span class="small-font"><%= seconds_to_time(@paper_session.time_taken) %></span>
+              </div>
+            </li>
+            <li class="list-group-item">
+              <div class="d-flex justify-content-between">
+                <span class="small-font">Correct Answers</span>
+                <span class="small-font"><%= correct_answers_count %></span>
+              </div>
+            </li>
+            <li class="list-group-item">
+              <div class="d-flex justify-content-between">
+                <span class="small-font">Percentage</span>
+                <span class="small-font"><%= ((correct_marks.to_f / total_marks) * 100).round(2) %>%</span>
+              </div>
+            </li>
+            <li class="list-group-item">
+              <div class="d-flex justify-content-between">
+                <span class="small-font">Minimum Marks</span>
+                <span class="small-font"><%= minimum_marks %></span>
+              </div>
+            </li>
+            <li class="list-group-item">
+              <div class="d-flex justify-content-between">
+                <span class="small-font">Status</span>
+                <span class="small-font">
+                  <% if @paper_session.status == 'complete' %>
+                    <%= content_tag(:span, 'Complete', class: 'btn btn-success btn-sm') %>
+                  <% else %>
+                    <%= content_tag(:span, 'Pending', class: 'btn btn-warning btn-sm') %>
+                  <% end %>
+              </span>
+              </div>
+            </li>
+          <% else %>
+            <li class="list-group-item">
+              <div class="d-flex justify-content-between">
+                <span class="small-font">Score</span>
+              </div>
+            </li>
+            <li class="list-group-item">
+              <div class="d-flex justify-content-between">
+                <span class="small-font">Time Taken</span>
+              </div>
+            </li>
+            <li class="list-group-item">
+              <div class="d-flex justify-content-between">
+                <span class="small-font">Correct Answers</span>
+              </div>
+            </li>
+            <li class="list-group-item">
+              <div class="d-flex justify-content-between">
+                <span class="small-font">Percentage</span>
+              </div>
+            </li>
+            <li class="list-group-item">
+              <div class="d-flex justify-content-between">
+                <span class="small-font">Maximum Marks</span>
+              </div>
+            </li>
+            <li class="list-group-item">
+              <div class="row">
+                <div class="col-8 d-flex justify-content-between">
+                  <span class="small-font">Status</span>
+                </div>
+                <div class="col-4 d-flex justify-content-between">
+                  <span class="small-font">Not Started</span>
+                </div>
+              </div>
+            </li>
+          <% end %>
+        </ul>
+      </div>
+      <%= link_to "Start Test", start_exam_student_exam_paper_path(current_student, @exam, paper), class: "btn btn-primary start-test-button" %>      
+      <% if @finished_paper_ids.include?(paper.id) %>
+        <% correct_answers_count = @paper_session.answers.where(correct: true).count %>
+        <% total_questions_count = paper.questions.count %>
+          
+        <div class="card-footer">
+          <div id="pieChart-<%= paper.id %>" style="min-height: 400px;" class="echart"></div>
+        </div>
+        
+        <script>
+          document.addEventListener("DOMContentLoaded", () => {
+            const pieChartDom = document.querySelector("#pieChart-<%= paper.id %>");
+            const pieChart = echarts.init(pieChartDom);
+
+            const correctAnswersCount = <%= correct_answers_count %>;
+            const totalQuestionsCount = <%= total_questions_count %>;
+            const incorrectAnswersCount = totalQuestionsCount - correctAnswersCount;
+
+            const pieChartData = [
+              { name: 'Correct Answers', value: correctAnswersCount, itemStyle: { color: '#5470C6' } },
+              { name: 'Incorrect Answers', value: incorrectAnswersCount, itemStyle: { color: '#91CC75' } }
+            ];
+
+            const option = {
+              tooltip: {
+                trigger: 'item',
+                formatter: function(params) {
+                  const { name, value, percent } = params;
+                  return `${name}: ${value} (${percent}%)`;
+                }
+              },
+              legend: {
+                orient: 'vertical',
+                left: 'left',
+                data: pieChartData.map(item => item.name)
+              },
+              series: [
+                {
+                  name: 'Answers',
+                  type: 'pie',
+                  radius: '55%',
+                  center: ['50%', '60%'],
+                  data: pieChartData,
+                  emphasis: {
+                    itemStyle: {
+                      shadowBlur: 10,
+                      shadowOffsetX: 0,
+                      shadowColor: 'rgba(0, 0, 0, 0.5)'
+                    }
+                  }
+                }
+              ]
+            };
+            pieChart.setOption(option);
+          });
+        </script>
+      <% else %>
+        <div class="text-right" style="width:250px">
+          <%#= image_tag "NoData.png", height: '100', width: '250' %>
+        </div>
+      <% end %>
+    </div>
+  </div>
+<% end %>

@@ -1,0 +1,11 @@
+<% if @errors %>
+  $("#QuestionErrors").html("<%= j render 'shared/custom_errors', resource: @errors %>");
+<% else %>
+  $("#question-list").html("<%= j(render partial: 'questions_data', locals: { questions: @questions }) %>");
+  $('#question-model').modal('hide');
+  $('.modal-backdrop').hide();
+<% end %>
+
+<% if @notification %>
+  pushNotify('<%= @notification[:status] %>', '<%= @notification[:title] %>', '<%= @notification[:message] %>');
+<% end %>

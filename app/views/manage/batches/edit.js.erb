@@ -1,0 +1,5 @@
+<% if @batch %>
+  $("#batch-form").html("<%= j render 'manage/batches/form', batch: @batch %>");
+  $('#batch-model').modal('show');
+  ApplicationController();
+<% end %>

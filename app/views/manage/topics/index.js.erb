@@ -1,0 +1,5 @@
+<% if @topics.present? %>
+  $("#topic-list").html("<%= j render 'manage/topics/topics', topics: @topics %>");
+<% else %>
+  $("#topic-list").html("<p class='result-not-found'>Topic not found with '<%= params[:query]%>'");
+<% end %>

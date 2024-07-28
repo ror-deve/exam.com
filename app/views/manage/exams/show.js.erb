@@ -1,0 +1,5 @@
+<% if @exam %>
+  $("#exam-form").html("<%= j render 'manage/exams/show_data', exam: @exam %>");
+  $('#exam-model').modal('show');
+  ApplicationController();
+<% end %>

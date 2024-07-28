@@ -1,0 +1,326 @@
+// bootstrap button 
+.btn {
+  border-radius: 0;
+}
+
+.btn-theme {
+  background: #e7ac3f;
+  color: #FFFFFF;
+}
+
+.btn-theme:hover {
+  background: #e09f28;
+  color: #FFFFFF;
+}
+.btn-outline-theme {
+  color: #e7ac3f;
+  border-color: #e7ac3f;
+}
+
+.btn-outline-theme.active{
+  background: #e7ac3f;
+  border-color: #e7ac3f;
+  color: #FFFFFF;
+}
+
+.btn-outline-primary {
+  color: #5cb85c;
+  border-color: #4cae4c;
+  background: #FFFFFF;
+}
+
+.btn-outline-primary:hover {
+  color: #5cb85c;
+  border-color: #4cae4c;
+  background: #FFFFFF;
+}
+
+.btn-success {
+  .btn-check:checked + .btn, :not(.btn-check) + .btn:active, .btn:first-child:active, .btn.active, .btn.show {
+    background: #5cb85c;
+    border-color: #4cae4c;
+    color: #FFFFFF;
+  }
+}
+
+.btn-success {
+  color: #FFFFFF;
+  background-color: #5cb85c;
+  border-color: #4cae4c;
+}
+
+.btn-success:hover {
+  background-color: #449d44;
+  border-color: #398439;
+}
+
+.btn-danger {
+  color: #FFFFFF !important;
+  background-color: #d9534f;
+  border-color: #d43f3a;
+}
+
+.btn-danger:hover {
+  background-color: #c9302c;
+  border-color: #ac2925;
+}
+
+// close button css - alert box
+.alert-dismissible .close {
+  position: absolute;
+  top: 0;
+  right: 0;
+  padding: 0.5rem 1.25rem;
+  color: inherit;
+}
+
+button.close {
+  padding: 0;
+  background-color: transparent;
+  border: 0;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+}
+
+button.btn-close {
+  width: 5px;
+}
+
+.close {
+  float: right;
+  font-size: 16px;
+  font-weight: 700;
+  line-height: 1;
+  color: #000;
+  text-shadow: 0 1px 0 #fff;
+  opacity: .5;
+  cursor: pointer;
+}
+
+.alert {
+  border-radius: 0;
+  font-size: 13px;
+  padding: 7px 14px 7px 14px;
+}
+
+.alert li {
+  font-size: 12px;
+}
+
+// forms
+.form-control:focus {
+  box-shadow: none;
+}
+
+.field_with_errors {
+  position: relative;
+  flex: 1 1 auto;
+  width: 1%;
+  min-width: 0;
+}
+
+.form-label {
+  color: #566787;
+  font-size: 14px;
+}
+
+.form-control {
+  border-radius: 0;
+  font-size: 12px;
+}
+
+#profileImage, #uploadImageButton {
+  display: none;
+}
+
+// modal css
+.deleteConfirmationText h5{
+  color: #f2798e;
+}
+
+.deleteConfirmationText p{
+  color: #deb887;
+  font-size: 14px;
+}
+
+.removeConfirmation {
+  width: 221px;
+  object-fit: fill;
+}
+
+.modal-title {
+  color: #FFFFFF;
+}
+
+.modal-header {
+  background: #3598DD;
+  border-radius: 0;
+}
+
+.modal-content {
+  border-radius: 0px;
+}
+
+.modalIllustration {
+  text-align: center;
+}
+
+.modalIllustration .modalIllustrationImg {
+  width: 200px;
+}
+
+// ckeditor section
+.ck-content {
+  min-height: calc(100vh - 475px);
+}
+
+.emptyList {
+  text-align: center;
+}
+
+.emptyList h4{
+  color: #c59614 !important;
+  font-size: 18px;
+}
+
+.emptyList img {
+  max-width: 50%;
+}
+
+.select2-container--default .select2-results__option--highlighted.select2-results__option--selectable {
+  background-color: #c59614 !important;
+  color: white;
+  font-size: 13px;
+  font-weight: 400;
+  font-family: "Varela Round", sans-serif;
+}
+
+.select2-container--default .select2-results__option--selected {
+  background-color: #ddd;
+  font-size: 13px;
+  font-weight: 400;
+  font-family: "Varela Round", sans-serif;
+}
+
+.select2-results__option {
+  padding: 6px;
+  user-select: none;
+  -webkit-user-select: none;
+  font-size: 13px;
+  font-weight: 400;
+  font-family: "Varela Round", sans-serif;
+}
+
+
+.select2-container--default .select2-selection--single .select2-selection__rendered  {
+  font-size: 12px;
+  color: #212529 !important;
+  font-weight: 400;
+  font-family: "Varela Round", sans-serif;
+}
+
+.m-10 {
+  margin: 10px !important;
+}
+
+.ml-0 {
+  margin-left: 0px !important;
+}
+
+.mt-0 {
+  margin-top: 0px !important;
+}
+
+hr {
+  opacity: 0.45;
+  color: #237baf !important;
+}
+
+.result-not-found {
+  text-align: center;
+}
+
+span.entity-title {
+  font-size: 20px;
+  font-weight: 600;
+  text-decoration: none;
+  color: #51678f;
+  opacity: 0.8;
+}
+
+// batch-students list page css 
+.student-list {
+  .media-main a.pull-left {
+    width: 100px;
+  }
+  .thumb-lg {
+    height: 84px;
+    width: 84px;
+  }
+  .media-main .info {
+    overflow: hidden;
+    color: #000;
+    padding: 20px;
+  }
+  .media-main .info h4 {
+    padding-top: 10px;
+    margin-bottom: 5px;
+  }
+
+  .media-main .info p.student-email,
+  .media-main .info p.student-phone {
+    font-size: 12px;
+    color: #aaaaaa;
+    margin-bottom: 0;
+  }
+  .social-links li a {
+    background: #EFF0F4;
+    width: 30px;
+    height: 30px;
+    line-height: 30px;
+    text-align: center;
+    display: inline-block;
+    border-radius: 50%;
+    -webkit-border-radius: 50%;
+    color: #7A7676;
+  }
+  .social-links {
+    display: flex;
+    list-style: none;
+    padding: 0;
+    margin-bottom: 0px;
+  }
+  .social-links li {
+    margin-right: 10px; /* Adjust spacing between list items */
+  }
+  .social-links li:last-child {
+    margin-right: 0; /* Remove margin from the last list item */
+  }
+  .btn-group-separator {
+    width: 2px;
+  }
+}
+
+/* Additional CSS for responsiveness */
+@media (max-width: 576px) {
+  .list-unstyled.social-links {
+    display: flex;
+    justify-content: center;
+  }
+  .list-unstyled.social-links li {
+    margin-right: 10px;
+  }
+}
+
+// exam-paper-question list page css 
+.question-list{
+  .btn-group-separator {
+    width: 3px;
+  }
+}
+
+.justify-content-end {
+  justify-content: flex-end !important;
+  z-index: 0;
+}

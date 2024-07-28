@@ -1,0 +1,11 @@
+<% if @errors %>
+  $("#StudentErrors").html("<%= j render 'shared/custom_errors', resource: @errors %>");
+<% else %>
+$("#students-list").html("<%= j(render partial: 'students_data', locals: { students: @students }) %>");
+$('#studentModal').modal('hide');
+$('.modal-backdrop').remove();
+<% end %>
+
+<% if @notification %>
+  pushNotify('<%= @notification[:status] %>', '<%= @notification[:title] %>', '<%= @notification[:message] %>');
+<% end %>

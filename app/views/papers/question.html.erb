@@ -1,0 +1,45 @@
+<div class="row">
+  <div class="col-9">
+    <h1>Question <%= @question_number %> of <%= @questions.count %></h1>
+  </div>
+  <div class="col-3">
+    <span id="timer" data-remaining-time="<%= @time_remaining %>">
+      <%= seconds_to_time(@time_remaining) %>
+    </span>
+  </div>
+</div>
+
+<%= form_with url: question_student_exam_paper_path(@student, @exam, @paper, question_number: @question_number), method: :post, local: true, id: 'exam-form' do |f| %>
+  <div class="question my-4 p-3 border rounded">
+    <h5><%= @question.title %></h5>
+    <ul class="list-unstyled">
+      <% [@question.option1, @question.option2, @question.option3, @question.option4, @question.option5].each_with_index do |option, i| %>
+        <% if option.present? %>
+          <li class="my-2">
+            <label class="form-check-label">
+              <%= radio_button_tag "answers[#{@question.id}]", option, (@selected_answers[@question.id.to_s] == option), class: 'form-check-input' %>
+              <%= option %>
+            </label>
+          </li>
+        <% end %>
+      <% end %>
+    </ul>
+  </div>
+
+  <div class="text-center">
+    <% if @question_number > 1 %>
+      <%= link_to 'Previous', question_student_exam_paper_path(@student, @exam, @paper, question_number: @question_number - 1), class: 'btn btn-secondary' %>
+    <% end %>
+    <% if @question_number < @questions.count %>
+      <%= f.submit 'Next', class: 'btn btn-primary' %>
+      <%= f.button 'Exit Exam', type: 'button', class: 'btn btn-danger', data: { bs_toggle: 'modal', bs_target: '#ExitConfirmation' } %>
+    <% else %>
+      <%= f.submit 'Submit Answers', class: 'btn btn-success' %>
+    <% end %>
+  </div>
+<% end %>
+
+<%= render "shared/confirmation" %>
+<script>
+  ApplicationController();
+</script>

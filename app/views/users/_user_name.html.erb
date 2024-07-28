@@ -1,0 +1,5 @@
+<% if current_student %>
+  <%= current_student.name %>
+<% elsif current_teacher %>
+  Hi, <%= current_teacher.name %>
+<% end %>

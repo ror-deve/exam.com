@@ -1,0 +1,27 @@
+@import 'bootstrap/scss/bootstrap';
+@import 'bootstrap-icons/font/bootstrap-icons';
+
+@import 'simple-notify/dist/simple-notify.css';
+// custom style
+@import 'style';
+@import 'override';
+@import 'table_list';
+@import 'loader';
+@import 'croppie';
+.btn {
+  border-radius: 0;
+}
+
+.btn-theme {
+  background: #3598DD;
+  color: #FFFFFF;
+}
+
+.btn-theme:hover {
+  background: #1975ab;
+  color: #FFFFFF;
+}
+
+.text-theme {
+  color: #3598DD;  
+}

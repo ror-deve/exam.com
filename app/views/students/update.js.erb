@@ -1,0 +1,36 @@
+document.addEventListener("DOMContentLoaded", function() {
+  var loadingState = document.getElementById("loadingState");
+  loadingState.style.display = "flex"; // Show the spinner
+  setTimeout(function() {
+    loadingState.style.display = "none"; // Hide the spinner after 4 seconds
+  }, 2000);
+});
+
+$("#EditUserProfileError").html("<%= j render 'shared/errors', resource: @student %>");
+$("#profile-overview").html("<%= j render 'users/profile_overview' %>");
+$(".updateUserName").html("<%= j render 'users/user_name' %>");
+setTimeout(function () {
+  $("#EditUserProfileForm")[0].classList.remove("was-validated");
+  $(".loading-overlay")[0].className = "loading-overlay";
+}, 1000);
+
+function showSpinner() {
+  var loadingState = document.getElementById("loadingState");
+  loadingState.style.display = "flex";
+}
+
+function hideSpinner() {
+  var loadingState = document.getElementById("loadingState");
+  loadingState.style.display = "none";
+}
+
+showSpinner();
+
+setTimeout(function() {
+  hideSpinner();
+}, 2000);
+
+
+<% if @notification %>
+  pushNotify('<%= @notification[:status] %>', '<%= @notification[:title] %>', '<%= @notification[:message] %>');
+<% end %>

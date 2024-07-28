@@ -1,0 +1,62 @@
+<div class="pagetitle">
+  <h1><%= @batch.name %> - Students</h1>
+  <nav>
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item"><a href="/">Home</a></li>
+      <li class="breadcrumb-item "><%= link_to 'Batches', manage_account_batches_path %></li>
+      <li class="breadcrumb-item active"><%= @batch.name %> - Students</li>
+    </ol>
+  </nav>
+</div>
+<hr>
+
+<div class="student-list">
+  <div class="row">
+    <div class="col-lg-12">
+      <div class="float-end">
+        <div class="btn-group" role="group">
+          <%= link_to new_manage_account_batch_student_path(@current_account, @batch),remote: true, class: "btn btn-theme btn-sm" do %>
+            <i class="bi bi-person-plus-fill"></i>
+            Add
+          <% end %>
+          <div class="btn-group-separator"></div>
+          <%= link_to "javascript:void(0);", class:"btn btn-sm btn-theme delete", data: { bs_toggle: "modal", bs_target: "#ImportConfirmation", account_id: current_account.id, student_id: @student.id } do %>
+            <i class="bi bi-download"></i> Import
+          <% end %>
+          <div class="btn-group-separator"></div>
+          <%= link_to export_manage_account_batch_students_path(@current_account, @batch), method: :get, remote: true,  class: "btn btn-theme btn-sm" do %>
+            <i class="bi bi-upload me-1"></i> Export
+          <% end %> 
+        </div>
+      </div>
+    </div>
+  </div>
+  <br>
+  <div class="row">
+    <div class="col-lg-12">
+      <div class="card">
+        <div class="card-body p-0">
+          <%= form_tag(manage_account_batch_students_path(@current_account, @batch), method: :get, remote: true, class: "search-form") do %>
+            <div class="input-group">
+              <%= text_field_tag :query, params[:query], class: "form-control", id: "search-student-input", placeholder: "Search student" %>
+              <button type="submit" class="btn btn-theme" id="search-student-btn"><i class="bi bi-search"></i></button>
+            </div>
+          <% end %>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div id="students-list">
+      <%= render partial: "students_data", locals: { students: @students } %>
+    </div>
+  </div>
+</div>
+
+<div id="student-form"></div>
+<%= render "manage/shared/delete_confirmation" %>
+
+<%= render partial: "import_modal_form" %>
+<script>
+  StudentsController();
+</script>

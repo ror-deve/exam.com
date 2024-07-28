@@ -1,0 +1,51 @@
+<div class="row">
+  <% students.each do |student| %>
+    <div id="student_<%= student.id %>" class="col-lg-4 col-md-6"> <!-- Adjust the column size based on your design -->
+      <div class="card">
+        <!-- Card body content -->
+        <div class="card-body">
+          <!-- Media content -->
+          <div class="media-main">
+            <!-- Left content -->
+            <a class="float-start" href="#">
+              <img class="img-thumbnail rounded-circle" src="https://bootdey.com/img/Content/user_1.jpg" alt="">
+            </a>
+            <!-- Right content -->
+            <div class="btn-group float-end">
+              <%= link_to "javascript:void(0);", class:"btn btn-sm btn-danger delete studentDelete", data: { bs_toggle: "modal", bs_target: "#DeleteConfirmation", account_id: current_account.id, batch_id: @batch.id, student_id: student.id } do %>
+                <i class="bi bi-x" title="Remove"></i>
+              <% end %>
+            </div>
+            <!-- Info -->
+            <div class="info">
+              <h5><%= student.name %></h5>
+              <p class="student-email"><%= student.email %></p>
+              <p class="student-phone">******<%= student.phone[-4..-1].to_s %></p>
+            </div>
+          </div>
+          <hr>
+          <!-- Social links -->
+          <ul class="list-unstyled social-links">
+            <li>
+              <a class="tooltips" href="#" data-bs-toggle="tooltip" data-bs-placement="top" title="Facebook"><i class="bi bi-facebook"></i></a>
+            </li>
+            <li>
+              <a class="tooltips" href="#" data-bs-toggle="tooltip" data-bs-placement="top" title="Twitter"><i class="bi bi-twitter"></i></a>
+            </li>
+            <li>
+              <a class="tooltips" href="#" data-bs-toggle="tooltip" data-bs-placement="top" title="LinkedIn"><i class="bi bi-linkedin"></i></a>
+            </li>
+            <li>
+              <a class="tooltips" href="#" data-bs-toggle="tooltip" data-bs-placement="top" title="Skype"><i class="bi bi-skype"></i></a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  <% end %>
+  
+  <!-- Studnet Pagination-->
+  <% if @students&.any? %>
+    <%= render partial: 'shared/pagination', locals: { data: @students, controller_name: 'manage/students' } %>
+  <% end %> 
+</div>

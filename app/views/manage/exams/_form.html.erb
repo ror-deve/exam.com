@@ -1,0 +1,46 @@
+<div class="modal fade" id="exam-model" tabindex="-1">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h6 class="modal-title"><%= action_name == 'new' ? 'New Exam' : 'Edit Exam'%></h6>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <%= form_for @exam, url: @exam.new_record? ? manage_account_exams_path(@current_account) : manage_account_exam_path(@current_account, @exam), local: false, remote: true, html: { novalidate: true, class: "g-3 needs-validation" } do |form| %>
+        <div class="modal-body">
+          <div class="modalIllustration">
+            <%= image_tag (action_name == 'new' ? 'add-folder.png' : 'edit-folder.png'), class: "modalIllustrationImg"%>
+          </div>
+          <div class="col-12 has-validation">
+            <%= form.label :name, "Exam Name:", class: "form-label", for: "exam_name" %>
+            <%= form.text_field :name, placeholder: "Enter Exam name", class: "form-control", required: true %>
+            <div class="invalid-feedback">Please enter Exam name.</div>
+          </div>
+          <div class="col-12 has-validation">
+            <%= form.label :duration, "Duration:", class: "form-label", for: "exam_duration" %>
+            <%= form.number_field :duration, placeholder: "Enter Exam duration", class: "form-control", required: true %>
+            <div class="invalid-feedback">Please enter Exam duration.</div>
+          </div>
+          <div class="col-12 has-validation">
+            <%= form.label :start_time, "Start Time:", class: "form-label", for: "exam_start_time" %>
+            <%= form.datetime_local_field :start_time, placeholder: "Enter Exam start time", class: "form-control", required: true %>
+            <div class="invalid-feedback">Please enter Exam start time.</div>
+          </div>
+          <div class="col-12 has-validation">
+            <%= form.label :end_time, "Start Time:", class: "form-label", for: "exam_end_time" %>
+            <%= form.datetime_local_field :end_time, placeholder: "Enter Exam end time", class: "form-control", required: true %>
+            <div class="invalid-feedback">Please enter Exam end time.</div>
+          </div>
+          <div class="col-12 has-validation">
+            <%= form.label :batch_id, "Batch:", class: "form-label", for: "exam_batch_id" %>
+            <%= form.select :batch_id, current_account.batches.pluck(:name, :id), { prompt: "Select Batch" }, class: "form-control", required: true %>
+            <div class="invalid-feedback">Please enter Exam batch.</div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary btn-sm" data-bs-dismiss="modal">Cancel</button>
+            <%= form.submit "Submit", class: "btn btn-theme btn-sm" %>
+          </div>
+        </div>
+      <% end %>  
+    </div>
+  </div>
+</div>

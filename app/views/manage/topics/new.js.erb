@@ -1,0 +1,5 @@
+<% if @topic %>
+  $("#topic-form").html("<%= j render 'manage/topics/form', topic: @topic %>");
+  $('#topic-model').modal('show');
+  ApplicationController();
+<% end %>

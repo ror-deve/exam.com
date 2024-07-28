@@ -1,0 +1,6 @@
+<% if @notification %>
+  $('#DeleteConfirmation').modal('hide');
+  $('.modal-backdrop').hide();
+  pushNotify('<%= @notification[:status] %>', '<%= @notification[:title] %>', '<%= @notification[:message] %>');
+  $("#exam_"+<%=@exam.id%>).remove();
+<% end %>

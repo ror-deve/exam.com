@@ -1,0 +1,81 @@
+<div class="row">
+  <% papers.each do |paper| %>
+    <div id="paper_<%= paper.id %>" class="col-md-3 mb-3">
+      <div class="card custom-exam-card">
+        <div class="card-header d-flex justify-content-between align-items-center">
+          <h6><%= paper.name %></h6>
+        </div>
+        <div class="card-body">
+          <ul class="list-group">
+            <li class="list-group-item">
+              <div class="d-flex justify-content-between">
+                <span class="small-font">Duration</span>
+                <span class="small-font"><%= seconds_to_time(paper.duration) %></span>
+              </div>
+            </li>
+          <li class="list-group-item">
+              <div class="d-flex justify-content-between">
+                <span class="small-font">Status</span>
+                <span class="small-font"><%= paper.status %></span>
+              </div>
+            </li>
+            <li class="list-group-item">
+              <div class="d-flex justify-content-between">
+                <span class="small-font">Marks per question</span>
+                <span class="small-font"><%= paper.marks_per_question %></span>
+              </div>
+            </li>
+            <li class="list-group-item">
+              <div class="d-flex justify-content-between">
+                <span class="small-font">Negative marks per question</span>
+                <span class="small-font"><%= paper.negative_marks_per_question %></span>
+              </div>
+            </li>
+            <li class="list-group-item">
+              <div class="d-flex justify-content-between">
+                <%= link_to manage_account_exam_paper_questions_path(@current_account, @exam, paper) do %>
+                  <i class="bi-question-diamond-fill"></i> Questions
+                <% end %>
+                <%= link_to paper.questions.count, manage_account_exam_paper_questions_path(@current_account, @exam, paper) %>
+              </div>
+            </li>
+            <li class="list-group-item">
+              <div class="row">
+                <div class="col-md-8 col-md-offset-2">
+                  <canvas id="paperPieChart<%= paper.id %>"></canvas>
+                  <% topic_ids, topic_names = [], [] %>
+                  <% paper.topics.pluck(:name, :id).each do |t| %>
+                    <% topic_names << t[0] %>
+                    <% topic_ids << t[1] %>
+                  <% end %>
+                </div>
+              </div>
+            </li>
+          </ul>
+        </div>
+        <div class="card-footer">
+          <div class="d-flex justify-content-end">
+            <div class="btn-group" role="group" aria-label="Basic example">
+            <%= link_to new_manage_account_exam_paper_question_path(@current_account, paper.exam_id, paper),remote: true, class: "btn btn-theme btn-sm" do %>
+                <i class="bi bi-person-plus-fill"></i>
+                Add Question
+              <% end %>&nbsp;
+              <%= link_to edit_manage_account_exam_paper_path(@current_account, @exam, paper), method: :GET, remote: true, class: "btn btn-theme btn-sm" do %>
+                <i class="bi bi-pencil" title="Edit"></i>
+              <% end %>&nbsp;
+              <%= link_to "javascript:void(0);", class:"btn btn-sm btn-danger delete paperDelete", data: { bs_toggle: "modal", bs_target: "#DeleteConfirmation", account_id: current_account.id, exam_id: @exam.id, paper_id: paper.id } do %>
+                <i class="bi bi-trash" title="Delete"></i>
+              <% end %>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  <% end %>
+  
+  <!-- Paper Pagination-->
+  <% if @papers&.any? %>
+    <%= render partial: 'shared/pagination', locals: { data: @papers, controller_name: 'manage/papers' } %>
+  <% end %>
+</div>
+<div id="question-form"></div>

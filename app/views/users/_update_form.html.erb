@@ -1,0 +1,45 @@
+<div class="card-body">
+  <%= form_with model: (current_student ? @student : @teacher), method: :put, local: false, html: { novalidate: true, class: "row g-3 needs-validation" }, id: "EditUserProfileForm" do |f| %>
+
+    <div id="EditUserProfileError"></div>
+      <div id="UpdateForm">
+        <div class="row mb-3">
+          <label for="Name" class="col-md-4 col-lg-3 col-form-label">Name</label>
+          <div class="col-md-8 col-lg-9">
+            <%= f.text_field "name", type: "text", id: "first_name",class: "form-control", required: true  %>
+            <div class="invalid-feedback">Name must be required.</div>
+          </div>
+        </div>
+
+        <div class="row mb-3">
+          <label for="email" class="col-md-4 col-lg-3 col-form-label">Email</label>
+          <div class="col-md-8 col-lg-9">
+            <%= f.email_field "email", type: "text", id: "last_name",class: "form-control", required: true %>
+            <div class="invalid-feedback">Email can't be blank.</div>
+          </div>
+        </div>
+
+        <div class="row mb-3">
+          <label for="Phone" class="col-md-4 col-lg-3 col-form-label">Phone</label>
+          <div class="col-md-8 col-lg-9">
+            <%= f.text_field "phone", type: "text", id: "phone", class: "form-control", required: true %>
+            <div class="invalid-feedback">Number must be required.</div>
+          </div>
+        </div>
+    
+        <div class="row mb-3">
+          <% if current_student %>
+            <label for="address" class="col-md-4 col-lg-3 col-form-label">Address</label>
+            <div class="col-md-8 col-lg-9">
+              <%= f.text_field "address", type: "text", id: "address", class: "form-control", required: true %>
+              <div class="invalid-feedback">Address must be required.</div>
+            </div>
+          <% end %>
+        </div>
+
+        <div class="text-center">
+          <%= f.submit "Save Changes", class: "btn btn-theme"%>
+        </div>
+      </div>
+  <% end %>
+</div>

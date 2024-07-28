@@ -1,0 +1,55 @@
+<% model_class = Exam %>
+<div class="modal" id="exam-model" tabindex="-1">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h6 class="modal-title">Show Exam</h6>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <div class="modalIllustration">
+          <%= image_tag 'show-folder.png', class: "modalIllustrationImg"%>
+        </div>
+        <div class="row">
+          <div class="col-md-12">
+            <div class="form-group row">
+              <div class="col-sm-10">
+                <strong><%= model_class.human_attribute_name(:account_id) %>:&nbsp;</strong> <%= @exam.account_id %>
+              </div>
+            </div><br>
+            <div class="form-group row">
+              <div class="col-sm-10">
+                <strong><%= model_class.human_attribute_name(:name) %>:&nbsp;</strong> <%= @exam.name %>
+              </div>
+            </div><br>
+            <div class="form-group row">
+              <div class="col-sm-10">
+                <strong><%= model_class.human_attribute_name(:status) %>:&nbsp;</strong> <%= @exam.status %>
+              </div>
+            </div><br>
+            <div class="form-group row">
+              <div class="col-sm-10">
+                <strong><%= model_class.human_attribute_name(:duration) %>:&nbsp;</strong> <%= @exam.duration %>
+              </div>
+            </div><br>
+            <div class="form-group row">
+              <div class="col-sm-10">
+                <strong><%= model_class.human_attribute_name(:start_time) %>:&nbsp;</strong> <%= @exam.start_time %>
+              </div>
+            </div><br>
+            <div class="form-group row">
+              <div class="col-sm-10">
+                <strong><%= model_class.human_attribute_name(:end_time) %>:&nbsp;</strong> <%= @exam.end_time %>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary btn-sm" data-bs-dismiss="modal">Cancel</button>
+      </div>
+    </div>
+  </div>
+</div>
+<div id="exam-form"></div>
+<%= render "manage/shared/delete_confirmation" %>

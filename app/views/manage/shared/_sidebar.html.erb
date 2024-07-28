@@ -1,0 +1,60 @@
+<!-- Spinner Overlay -->
+<div class="loading-overlay" id="loadingOverlay">
+  <div class="spinner-border spinner-border" role="status">
+    <span class="sr-only" id="Spinner"></span>
+  </div>
+</div>
+
+<!-- Sidebar -->
+<aside id="sidebar" class="sidebar">
+  <ul class="sidebar-nav" id="sidebar-nav">
+    <li class="nav-item">
+      <a class="nav-link <%= 'active' if current_page?(root_path) %>" href="/" remote="true">
+        <i class="bi bi-grid"></i>
+        <span>Dashboard</span>
+      </a>
+
+    </li>
+    <!-- End Dashboard Nav -->
+    <% if @current_account %>
+      <li class="nav-item">
+        <%= link_to manage_account_exams_path(@current_account), class: "nav-link #{'active' if current_page?(manage_account_exams_path(@current_account))}" do %>
+          <i class="bi bi-book"></i>
+          <span>Exams</span>
+        <% end %>
+      </li>
+
+      <li class="nav-item">
+        <%= link_to manage_account_subjects_path(@current_account), class: "nav-link #{'active' if current_page?(manage_account_subjects_path(@current_account))}" do %>
+          <i class="bi bi-journals"></i>
+          <span>Subjects</span>
+        <% end %>
+      </li>
+
+      <li class="nav-item">
+        <%= link_to manage_account_batches_path(@current_account), class: "nav-link #{'active' if current_page?(manage_account_batches_path(@current_account))}" do %>
+          <i class="bi bi-people"></i>
+          <span>Batches</span>
+        <% end %>
+      </li>
+    <% end %>
+
+    <% if teacher_signed_in? %>
+      <li class="nav-item">
+        <%= link_to manage_accounts_path(@current_account), class: "nav-link #{'active' if current_page?(manage_accounts_path(@current_account))}" do %>
+          <i class="bi bi-collection"></i>
+          <span>Institutes</span>
+        <% end %>
+      </li>
+    <% end %>
+
+    <!-- End Icons Nav -->
+    <li class="nav-heading">Pages</li>
+    <li class="nav-item">
+      <a class="nav-link" href="javascript:void(0);">
+        <i class="bi bi-person"></i>
+        <span>Help</span>
+      </a>
+    </li>
+  </ul>
+</aside>

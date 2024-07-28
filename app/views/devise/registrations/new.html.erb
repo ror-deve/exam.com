@@ -1,0 +1,83 @@
+<div class="card-body">
+  <div class="pt-4 pb-2">
+    <h5 class="card-title text-center pb-0 fs-4">Create an Account</h5>
+    <p class="text-center small">Enter your personal details to create account</p>
+  </div>
+
+  <%= form_for(resource, as: resource_name, url: registration_path(resource_name), html: { novalidate: true, class: "row g-3 needs-validation" }, data: { turbo: false }) do |f| %>
+    <%= render 'shared/errors', resource: resource  %>
+    <div class="col-12">
+      <label for="email" class="form-label">Email</label>
+      <div class="input-group has-validation">
+        <span class="input-group-text" id="inputGroupPrepend">@</span>
+        <%= f.email_field :email, autofocus: true, class: "form-control", id: "email", required: true%>
+        <div class="invalid-feedback">Please enter a valid Email adddress!</div>
+      </div>
+    </div>
+    <div class="col-12">
+      <label for="name" class="form-label">Name</label>
+      <%= f.text_field :name, autocomplete: "name", class: "form-control", id: "name", required: true %>
+      <div class="invalid-feedback">Please choose a name.</div>
+    </div>
+    <div class="col-12">
+      <label for="phone" class="form-label">Phone</label>
+      <%= f.text_field :phone, autocomplete: "phone", class: "form-control", id: "phone", required: true, pattern: '\d*' %>
+      <div class="invalid-feedback">Please enter a valid phone number (numbers only).</div>
+    </div>
+    <div class="col-12">
+      <% if resource_name == :student %>
+        <label for="address" class="form-label">Address</label>
+        <%= f.text_field :address, autocomplete: "address", class: "form-control", id: "address", required: true %>
+        <div class="invalid-feedback">Please choose a address.</div>
+      <% end %>
+    </div>
+    <div class="col-12">
+      <label for="password" class="form-label">Password</label>
+      <%= f.password_field :password, autocomplete: "new-password", class: "form-control", id: "password", required: true %>
+      <div class="invalid-feedback">Please enter your password!</div>
+    </div>
+    <div class="col-12">
+      <label for="passwordConfirmation" class="form-label">Password confirmation</label>
+      <%= f.password_field :password_confirmation, autocomplete: "new-password", class: "form-control", id: "passwordConfirmation", required: true%>
+      <div class="invalid-feedback">Please enter your confirm password!</div>
+    </div>
+    <div class="col-12">
+      <div class="form-check">
+        <input class="form-check-input" name="terms" type="checkbox" value="" id="acceptTerms" required>
+        <label class="form-check-label" for="acceptTerms">I agree and accept the
+          <a href="#" data-bs-toggle="modal" data-bs-target="#termsAndConditions">terms and conditions</a>
+        </label>
+        <div class="invalid-feedback">You must agree before submitting.</div>
+      </div>
+    </div>
+    <div class="col-12">
+      <button class="btn btn-theme w-100" type="submit">Create Account</button>
+    </div>
+    <div class="col-12">
+      <p class="small mb-0">Already have an account?
+        <%= link_to "Log in", new_session_path(resource_name), remote: false, method: :get %>
+      </p>
+    </div>
+  <% end %>
+</div>
+
+<!-- Modal Dialog Scrollable -->
+<div class="modal fade" id="termsAndConditions" tabindex="-1">
+  <div class="modal-dialog modal-dialog-scrollable">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Terms and conditions</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        All rights are reserved by Pariksha24.
+        <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-theme" data-bs-dismiss="modal">Agree</button>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- End Modal Dialog Scrollable-->
